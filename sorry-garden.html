@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>for you</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500&family=Quicksand:wght@400;500;600&display=swap');
+
+  :root{
+    --dusk: #221a2b;
+    --dusk-2: #2f2338;
+    --blush: #f2a9c4;
+    --blush-soft: #f6c9dc;
+    --gold: #e8c468;
+    --sage: #8fae8b;
+    --cream: #f8efe3;
+    --stem: #5c7a58;
+  }
+
+  *{ margin:0; padding:0; box-sizing:border-box; }
+
+  html{ scroll-behavior:smooth; }
+
+  body{
+    background:
+      radial-gradient(ellipse at 50% 0%, var(--dusk-2), var(--dusk) 70%);
+    color:var(--cream);
+    font-family:'Quicksand', sans-serif;
+    min-height:100vh;
+    overflow-x:hidden;
+  }
+
+  .stars{
+    position:fixed; inset:0; pointer-events:none; z-index:0;
+  }
+
+  /* Intro overlay */
+  .intro-overlay{
+    position:fixed; inset:0; z-index:50;
+    height:100vh; height:100dvh;
+    background:radial-gradient(ellipse at 50% 40%, var(--dusk-2), var(--dusk) 75%);
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    gap:1rem;
+    transition:opacity 0.7s ease, visibility 0.7s ease;
+  }
+  .intro-overlay.hidden{ opacity:0; visibility:hidden; pointer-events:none; }
+
+  .intro-stars{ position:absolute; inset:0; pointer-events:none; }
+  .intro-stars span{
+    position:absolute; width:2px; height:2px; background:var(--cream);
+    border-radius:50%; opacity:0.3; animation:twinkle 4s ease-in-out infinite;
+  }
+
+  .envelope-wrap{
+    position:relative; z-index:1;
+    display:flex; flex-direction:column; align-items:center; gap:1.1rem;
+    cursor:pointer;
+    animation:floatEnv 3.5s ease-in-out infinite;
+  }
+  @keyframes floatEnv{ 0%,100%{ transform:translateY(0) } 50%{ transform:translateY(-8px) } }
+
+  .envelope{ width:min(62vw, 240px); overflow:visible; }
+  .env-body{ fill:var(--blush-soft); }
+  .env-flap-back{ fill:#e6a9c2; }
+  .env-flap{
+    fill:var(--blush);
+    transform-origin:100px 20px;
+    transition:transform 0.6s cubic-bezier(.4,0,.2,1);
+  }
+  .env-heart{ fill:var(--dusk); opacity:0.85; }
+
+  .envelope-wrap.opening .env-flap{ transform:rotateX(180deg); }
+  .envelope-wrap.opening{ animation:none; }
+
+  .intro-caption{
+    font-family:'Cormorant Garamond', serif;
+    font-style:italic;
+    font-size:1rem;
+    color:rgba(248,239,227,0.55);
+    letter-spacing:0.03em;
+  }
+
+  .intro-text{
+    position:relative; z-index:1;
+    text-align:center;
+    opacity:0;
+    transform:translateY(10px);
+    animation:fadeUp 0.7s ease forwards;
+    padding:0 6vw;
+  }
+  @keyframes fadeUp{ to{ opacity:1; transform:translateY(0) } }
+
+  .intro-eyebrow{
+    font-size:0.72rem; letter-spacing:0.3em; text-transform:uppercase;
+    color:var(--gold); margin-bottom:0.8rem; opacity:0.85;
+  }
+  .intro-text h2{
+    font-family:'Cormorant Garamond', serif;
+    font-weight:600; font-size:clamp(2rem, 5vw, 3rem);
+    color:var(--cream);
+  }
+  .intro-text h2 .dot{ color:var(--blush-soft); }
+  .intro-text p{
+    margin:1rem 0 1.8rem;
+    color:rgba(248,239,227,0.7);
+    font-size:1rem;
+    max-width:32ch;
+    margin-left:auto; margin-right:auto;
+  }
+  .stars span{
+    position:absolute; width:2px; height:2px; background:var(--cream);
+    border-radius:50%; opacity:0.35; animation:twinkle 4s ease-in-out infinite;
+  }
+  @keyframes twinkle{ 0%,100%{opacity:.15} 50%{opacity:.7} }
+
+  section{
+    position:relative; z-index:1;
+    min-height:100vh;
+    min-height:100dvh;
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    padding:8vh 6vw;
+    text-align:center;
+  }
+
+  h1{
+    font-family:'Cormorant Garamond', serif;
+    font-weight:600;
+    font-size:clamp(2.4rem, 6vw, 4.2rem);
+    line-height:1.1;
+    letter-spacing:0.01em;
+    color:var(--cream);
+  }
+
+  h1 em{
+    font-style:italic;
+    color:var(--blush-soft);
+  }
+
+  .eyebrow{
+    font-size:0.78rem;
+    letter-spacing:0.3em;
+    text-transform:uppercase;
+    color:var(--gold);
+    margin-bottom:1.4rem;
+    opacity:0.85;
+  }
+
+  .sub{
+    margin-top:1.3rem;
+    max-width:38ch;
+    font-size:1.05rem;
+    line-height:1.7;
+    color:rgba(248,239,227,0.75);
+  }
+
+  .scroll-hint{
+    margin-top:3.5rem;
+    font-size:0.85rem;
+    color:rgba(248,239,227,0.5);
+    display:flex; flex-direction:column; align-items:center; gap:0.5rem;
+  }
+  .scroll-hint .arrow{
+    width:1px; height:34px;
+    background:linear-gradient(to bottom, rgba(248,239,227,0.6), transparent);
+    animation:dropdown 1.8s ease-in-out infinite;
+  }
+  @keyframes dropdown{ 0%{transform:scaleY(0); transform-origin:top} 50%{transform:scaleY(1); transform-origin:top} 100%{transform:scaleY(0); transform-origin:bottom} }
+
+  /* Garden */
+  .garden-wrap{ max-width:640px; width:100%; }
+  .garden-title{
+    font-family:'Cormorant Garamond', serif;
+    font-size:clamp(1.6rem, 4vw, 2.3rem);
+    margin-bottom:0.6rem;
+  }
+  .garden-note{
+    color:rgba(248,239,227,0.65);
+    font-size:0.95rem;
+    margin-bottom:3rem;
+  }
+
+  .plots{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:1.6rem 1.2rem;
+    width:100%;
+  }
+
+  .plot{
+    background:rgba(255,255,255,0.03);
+    border:1px solid rgba(255,255,255,0.08);
+    border-radius:14px;
+    padding:1.6rem 0.8rem 1.2rem;
+    cursor:pointer;
+    transition:transform 0.25s ease, background 0.25s ease, border-color 0.25s ease;
+    display:flex; flex-direction:column; align-items:center; gap:0.7rem;
+    -webkit-tap-highlight-color:transparent;
+  }
+  .plot:hover{ transform:translateY(-3px); background:rgba(255,255,255,0.05); }
+  .plot.bloomed{
+    border-color:rgba(242,169,196,0.4);
+    background:rgba(242,169,196,0.06);
+    cursor:default;
+  }
+
+  .flower{ width:56px; height:56px; }
+  .flower .petal{ transition:all 0.5s ease; transform-origin:center; }
+  .plot:not(.bloomed) .petal{ fill:#4a4256; }
+  .plot:not(.bloomed) .center{ fill:#3a3444; }
+  .plot:not(.bloomed) .stem{ stroke:#4a4256; }
+
+  .plot.bloomed .petal{ fill:var(--blush); }
+  .plot.bloomed .center{ fill:var(--gold); }
+  .plot.bloomed .stem{ stroke:var(--stem); }
+  .plot.bloomed .flower{ animation:pop 0.55s cubic-bezier(.34,1.56,.64,1); }
+  @keyframes pop{ 0%{ transform:scale(0.4) rotate(-8deg); opacity:0.3 } 100%{ transform:scale(1) rotate(0); opacity:1 } }
+
+  .plot-label{
+    font-size:0.72rem;
+    letter-spacing:0.05em;
+    color:rgba(248,239,227,0.4);
+  }
+  .plot.bloomed .plot-label{ color:rgba(248,239,227,0.7); }
+
+  .message-box{
+    margin-top:2.6rem;
+    min-height:70px;
+    max-width:480px;
+    font-family:'Cormorant Garamond', serif;
+    font-style:italic;
+    font-size:1.35rem;
+    line-height:1.6;
+    color:var(--blush-soft);
+    opacity:0;
+    transform:translateY(6px);
+    transition:opacity 0.5s ease, transform 0.5s ease;
+  }
+  .message-box.show{ opacity:1; transform:translateY(0); }
+
+  .progress{
+    margin-top:2rem;
+    font-size:0.8rem;
+    letter-spacing:0.15em;
+    color:rgba(248,239,227,0.4);
+    text-transform:uppercase;
+  }
+
+  /* Finale */
+  .finale-card{
+    background:linear-gradient(160deg, rgba(242,169,196,0.08), rgba(232,196,104,0.05));
+    border:1px solid rgba(242,169,196,0.25);
+    border-radius:22px;
+    padding:3.2rem 2.4rem;
+    max-width:520px;
+    width:100%;
+  }
+
+  .finale-flowers{
+    display:flex; justify-content:center; gap:0.4rem; margin-bottom:1.6rem;
+  }
+  .finale-flowers svg{ width:34px; height:34px; }
+
+  .letter{
+    font-family:'Cormorant Garamond', serif;
+    font-size:1.3rem;
+    line-height:1.85;
+    color:var(--cream);
+    text-align:left;
+    margin-bottom:2.2rem;
+  }
+  .letter .name-fill{ color:var(--blush-soft); font-style:italic; }
+  .signoff{
+    display:block;
+    margin-top:1rem;
+    font-style:italic;
+    color:var(--gold);
+  }
+
+  .btn{
+    font-family:'Quicksand', sans-serif;
+    font-weight:600;
+    font-size:0.95rem;
+    letter-spacing:0.03em;
+    padding:0.85rem 2.2rem;
+    border-radius:999px;
+    border:none;
+    cursor:pointer;
+    background:var(--blush);
+    color:#2b1f33;
+    transition:transform 0.2s ease, background 0.2s ease;
+  }
+  .btn:hover{ transform:scale(1.04); background:var(--blush-soft); }
+
+  .btn-row{
+    display:flex; gap:0.8rem; justify-content:center; flex-wrap:wrap;
+    position:relative; min-height:52px;
+  }
+  .btn.secondary{
+    background:transparent;
+    border:1px solid rgba(248,239,227,0.35);
+    color:var(--cream);
+  }
+  .btn.secondary:hover{ background:rgba(255,255,255,0.06); transform:scale(1.04); }
+
+  .reply{
+    margin-top:1.6rem;
+    font-family:'Cormorant Garamond', serif;
+    font-size:1.15rem;
+    font-style:italic;
+    color:var(--sage);
+    min-height:28px;
+  }
+
+  #noBtn{
+    position:relative;
+    touch-action:manipulation;
+    transition:transform 0.18s ease, background 0.18s ease;
+  }
+  #noBtn.fleeing{
+    position:fixed;
+    z-index:20;
+  }
+
+  .dodge-caption{
+    position:fixed;
+    z-index:21;
+    font-family:'Cormorant Garamond', serif;
+    font-style:italic;
+    font-size:0.95rem;
+    color:var(--gold);
+    background:rgba(34,26,43,0.9);
+    border:1px solid rgba(232,196,104,0.3);
+    padding:0.3rem 0.8rem;
+    border-radius:10px;
+    pointer-events:none;
+    opacity:0;
+    transition:opacity 0.25s ease;
+    white-space:nowrap;
+  }
+  .dodge-caption.show{ opacity:1; }
+
+  .petal-fall{
+    position:fixed; top:-20px; z-index:5; pointer-events:none;
+    animation:fall linear forwards;
+  }
+  @keyframes fall{
+    to{ transform:translateY(105vh) rotate(400deg); opacity:0.2; }
+  }
+
+  footer{
+    padding:2rem; text-align:center; font-size:0.75rem;
+    color:rgba(248,239,227,0.3); position:relative; z-index:1;
+  }
+
+  @media (max-width:480px){
+    section{ padding:6vh 5vw; }
+    .plots{ grid-template-columns:repeat(3,1fr); gap:0.9rem 0.5rem; }
+    .plot{ padding:1.1rem 0.4rem 0.9rem; border-radius:12px; }
+    .flower{ width:40px; height:40px; }
+    .plot-label{ font-size:0.65rem; }
+    .message-box{ font-size:1.15rem; padding:0 2vw; }
+    .garden-note{ margin-bottom:2.2rem; font-size:0.88rem; }
+    .finale-card{ padding:2.2rem 1.4rem; border-radius:18px; }
+    .letter{ font-size:1.1rem; line-height:1.7; margin-bottom:1.8rem; }
+    .btn{ padding:0.8rem 1.6rem; font-size:0.9rem; }
+    .dodge-caption{
+      font-size:0.82rem;
+      max-width:70vw;
+      white-space:normal;
+      text-align:center;
+    }
+    .envelope{ width:min(70vw, 200px); }
+    .intro-text p{ font-size:0.92rem; }
+    .sub{ font-size:0.98rem; }
+    .scroll-hint{ margin-top:2.4rem; }
+  }
+
+  @media (max-width:360px){
+    h1{ font-size:1.9rem; }
+    .plots{ gap:0.7rem 0.4rem; }
+    .flower{ width:34px; height:34px; }
+    .finale-flowers svg{ width:26px; height:26px; }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ animation:none !important; transition:none !important; }
+  }
+</style>
+</head>
+<body>
+
+<div class="stars" id="stars"></div>
+
+<!-- INTRO -->
+<div class="intro-overlay" id="introOverlay">
+  <div class="intro-stars" id="introStars"></div>
+  <div class="envelope-wrap" id="envelopeWrap">
+    <svg class="envelope" viewBox="0 0 200 140" id="envelopeSvg">
+      <rect class="env-body" x="6" y="20" width="188" height="114" rx="8"/>
+      <polygon class="env-flap" id="envFlap" points="6,20 100,90 194,20"/>
+      <polygon class="env-flap-back" points="6,20 100,80 194,20 194,134 6,134"/>
+      <path class="env-heart" d="M100 60 c-6,-10 -22,-10 -22,4 c0,12 22,26 22,26 c0,0 22,-14 22,-26 c0,-14 -16,-14 -22,-4 z"/>
+    </svg>
+    <div class="intro-caption">tap to open</div>
+  </div>
+  <div class="intro-text" id="introText" style="display:none;">
+    <div class="intro-eyebrow">a message</div>
+    <h2>From your dev<span class="dot">.</span></h2>
+    <p>Built this instead of just texting sorry. Open it below.</p>
+    <button class="btn" id="enterBtn">Open it</button>
+  </div>
+</div>
+
+<!-- HERO -->
+<section>
+  <div class="eyebrow">a small apology</div>
+  <h1>I know I messed up.<br>Let me <em>make it right.</em></h1>
+  <p class="sub">Before you say anything — just give me two minutes and six flowers. That's all I'm asking.</p>
+  <div class="scroll-hint">
+    <span>scroll down</span>
+    <div class="arrow"></div>
+  </div>
+</section>
+
+<!-- GARDEN -->
+<section>
+  <div class="garden-wrap">
+    <div class="garden-title">This garden went quiet because of me.</div>
+    <div class="garden-note">Tap each patch to bring it back — one flower, one reason.</div>
+
+    <div class="plots" id="plots"></div>
+
+    <div class="message-box" id="messageBox"></div>
+    <div class="progress" id="progress">0 / 6 bloomed</div>
+  </div>
+</section>
+
+<!-- FINALE -->
+<section id="finale" style="display:none;">
+  <div class="finale-card">
+    <div class="finale-flowers" id="finaleFlowers"></div>
+    <div class="letter">
+      Every flower here is a small, true thing. I was wrong, and I'm sorry —
+      not the lazy kind of sorry, the kind where I actually plan to do better.
+      <span class="name-fill">You</span> matter to me more than being right does.
+      <span class="signoff">— me, for real this time</span>
+    </div>
+    <div class="btn-row" id="btnRow">
+      <button class="btn" onclick="respond('yes')">Okay, I forgive you 🌸</button>
+      <button class="btn secondary" id="noBtn" onmouseenter="dodge()" onclick="dodge()" ontouchstart="dodgeTouch(event)">Nah, still mad</button>
+    </div>
+    <div class="dodge-caption" id="dodgeCaption"></div>
+    <div class="reply" id="reply"></div>
+  </div>
+</section>
+
+<footer>made with a little bit of dumb and a lot of sorry</footer>
+
+<script>
+  // starfield
+  function fillStars(el, n){
+    for(let i=0;i<n;i++){
+      const s = document.createElement('span');
+      s.style.left = Math.random()*100+'%';
+      s.style.top = Math.random()*100+'%';
+      s.style.animationDelay = (Math.random()*4)+'s';
+      el.appendChild(s);
+    }
+  }
+  fillStars(document.getElementById('stars'), 50);
+  fillStars(document.getElementById('introStars'), 40);
+
+  // intro envelope sequence
+  const envelopeWrap = document.getElementById('envelopeWrap');
+  const introText = document.getElementById('introText');
+  const introOverlay = document.getElementById('introOverlay');
+  const enterBtn = document.getElementById('enterBtn');
+
+  envelopeWrap.addEventListener('click', ()=>{
+    if(envelopeWrap.classList.contains('opening')) return;
+    envelopeWrap.classList.add('opening');
+    setTimeout(()=>{
+      envelopeWrap.style.display = 'none';
+      introText.style.display = 'block';
+    }, 550);
+  });
+
+  enterBtn.addEventListener('click', ()=>{
+    introOverlay.classList.add('hidden');
+  });
+
+  // EDIT THESE 6 MESSAGES — make them true and specific to what happened
+  const messages = [
+    "I'm sorry for what I said. It came out wrong and I didn't mean to hurt you.",
+    "I should've listened instead of getting defensive.",
+    "You deserved better than how I handled it.",
+    "I've been thinking about it, and I get why you're upset.",
+    "I miss talking to you like normal. This silence sucks.",
+    "I'm not asking you to forget it — just to let me try again."
+  ];
+
+  const flowerSVG = `
+    <svg class="flower" viewBox="0 0 60 60">
+      <line class="stem" x1="30" y1="60" x2="30" y2="34" stroke-width="3" stroke-linecap="round"/>
+      <g class="petal-group">
+        <ellipse class="petal" cx="30" cy="14" rx="7" ry="12"/>
+        <ellipse class="petal" cx="30" cy="14" rx="7" ry="12" transform="rotate(72 30 24)"/>
+        <ellipse class="petal" cx="30" cy="14" rx="7" ry="12" transform="rotate(144 30 24)"/>
+        <ellipse class="petal" cx="30" cy="14" rx="7" ry="12" transform="rotate(216 30 24)"/>
+        <ellipse class="petal" cx="30" cy="14" rx="7" ry="12" transform="rotate(288 30 24)"/>
+      </g>
+      <circle class="center" cx="30" cy="24" r="6"/>
+    </svg>`;
+
+  const plotsEl = document.getElementById('plots');
+  const messageBox = document.getElementById('messageBox');
+  const progressEl = document.getElementById('progress');
+  let bloomed = 0;
+
+  messages.forEach((msg, i)=>{
+    const div = document.createElement('div');
+    div.className = 'plot';
+    div.innerHTML = flowerSVG + `<div class="plot-label">patch ${i+1}</div>`;
+    div.addEventListener('click', ()=>{
+      if(div.classList.contains('bloomed')) return;
+      div.classList.add('bloomed');
+      bloomed++;
+      messageBox.textContent = '"' + msg + '"';
+      messageBox.classList.remove('show');
+      void messageBox.offsetWidth;
+      messageBox.classList.add('show');
+      progressEl.textContent = bloomed + ' / 6 bloomed';
+      spawnPetals(3);
+      if(bloomed === messages.length){
+        setTimeout(()=>{
+          document.getElementById('finale').style.display = 'flex';
+          document.getElementById('finale').scrollIntoView({behavior:'smooth'});
+          buildFinaleFlowers();
+        }, 700);
+      }
+    });
+    plotsEl.appendChild(div);
+  });
+
+  function buildFinaleFlowers(){
+    const el = document.getElementById('finaleFlowers');
+    el.innerHTML = '';
+    for(let i=0;i<6;i++){
+      const wrap = document.createElement('div');
+      wrap.innerHTML = flowerSVG;
+      wrap.firstElementChild.querySelectorAll('.petal').forEach(p=>p.setAttribute('fill','#f2a9c4'));
+      wrap.firstElementChild.querySelector('.center').setAttribute('fill','#e8c468');
+      wrap.firstElementChild.querySelector('.stem').setAttribute('stroke','#5c7a58');
+      el.appendChild(wrap.firstElementChild);
+    }
+  }
+
+  function spawnPetals(n){
+    for(let i=0;i<n;i++){
+      const p = document.createElement('div');
+      p.className = 'petal-fall';
+      p.style.left = Math.random()*100+'vw';
+      p.style.width = p.style.height = (6+Math.random()*6)+'px';
+      p.style.background = Math.random()>0.5 ? '#f2a9c4' : '#e8c468';
+      p.style.borderRadius = '60% 40% 60% 40%';
+      p.style.animationDuration = (2.5+Math.random()*1.5)+'s';
+      document.body.appendChild(p);
+      setTimeout(()=>p.remove(), 4200);
+    }
+  }
+
+  function respond(kind){
+    const reply = document.getElementById('reply');
+    if(kind === 'yes'){
+      reply.textContent = "Thank you. I won't waste it 🌿";
+      spawnPetals(20);
+    } else {
+      reply.textContent = "Take your time — I'll still be here.";
+    }
+  }
+
+  // runaway "no" button
+  const taunts = [
+    "you called me a dev, what did you expect 😏",
+    "not today",
+    "gonna have to catch me first",
+    "this button has trust issues, like you",
+    "error 404: forgiveness withheld",
+    "nope. try the pink one.",
+    "I debugged this specifically for you",
+    "she said 'still mad' and the button said 'lol no'"
+  ];
+
+  const noBtn = document.getElementById('noBtn');
+  const caption = document.getElementById('dodgeCaption');
+  let dodgeCount = 0;
+
+  function placeRandomly(){
+    const w = noBtn.offsetWidth || 140;
+    const h = noBtn.offsetHeight || 44;
+    const margin = 16;
+    const maxX = Math.max(margin, window.innerWidth - w - margin);
+    const maxY = Math.max(margin, window.innerHeight - h - margin);
+    const x = margin + Math.random()*(maxX - margin);
+    const y = margin + Math.random()*(maxY - margin);
+    noBtn.classList.add('fleeing');
+    noBtn.style.left = x + 'px';
+    noBtn.style.top = y + 'px';
+
+    caption.textContent = taunts[dodgeCount % taunts.length];
+    caption.style.left = '0px';
+    caption.style.top = '0px';
+    caption.classList.add('show');
+    const capW = caption.offsetWidth;
+    const capX = Math.min(Math.max(10, x - capW/2 + w/2), window.innerWidth - capW - 10);
+    const capY = Math.max(10, y - 44);
+    caption.style.left = capX + 'px';
+    caption.style.top = capY + 'px';
+    clearTimeout(caption._t);
+    caption._t = setTimeout(()=>caption.classList.remove('show'), 1600);
+
+    dodgeCount++;
+  }
+
+  function dodge(){
+    placeRandomly();
+  }
+
+  function dodgeTouch(e){
+    e.preventDefault();
+    dodge();
+  }
+</script>
+
+</body>
+</html>
