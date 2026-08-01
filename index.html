@@ -327,15 +327,15 @@
     z-index:21;
     font-family:'Cormorant Garamond', serif;
     font-style:italic;
-    font-size:0.95rem;
+    font-size:1.05rem;
     color:var(--gold);
-    background:rgba(34,26,43,0.9);
+    background:rgba(34,26,43,0.95);
     border:1px solid rgba(232,196,104,0.3);
-    padding:0.3rem 0.8rem;
+    padding:0.4rem 1rem;
     border-radius:10px;
     pointer-events:none;
     opacity:0;
-    transition:opacity 0.25s ease;
+    transition:opacity 0.4s ease;
     white-space:nowrap;
   }
   .dodge-caption.show{ opacity:1; }
@@ -348,9 +348,75 @@
     to{ transform:translateY(105vh) rotate(400deg); opacity:0.2; }
   }
 
+  /* Reply box */
+  .reply-box{
+    margin-top:2.4rem;
+    padding-top:1.8rem;
+    border-top:1px solid rgba(248,239,227,0.1);
+  }
+  .reply-box-label{
+    font-family:'Cormorant Garamond', serif;
+    font-style:italic;
+    font-size:1rem;
+    color:rgba(248,239,227,0.6);
+    margin-bottom:0.8rem;
+  }
+  #replyInput{
+    width:100%;
+    resize:vertical;
+    min-height:60px;
+    font-family:'Quicksand', sans-serif;
+    font-size:0.95rem;
+    color:var(--cream);
+    background:rgba(255,255,255,0.04);
+    border:1px solid rgba(248,239,227,0.15);
+    border-radius:12px;
+    padding:0.8rem 1rem;
+    margin-bottom:0.8rem;
+  }
+  #replyInput:focus{
+    outline:none;
+    border-color:rgba(242,169,196,0.45);
+    background:rgba(255,255,255,0.06);
+  }
+  #replyInput::placeholder{ color:rgba(248,239,227,0.3); }
+
+  .btn.small{ padding:0.6rem 1.6rem; font-size:0.85rem; }
+
+  .reply-echo{
+    margin-top:1.2rem;
+    padding:1rem 1.2rem;
+    background:rgba(242,169,196,0.07);
+    border:1px solid rgba(242,169,196,0.2);
+    border-radius:12px;
+    font-family:'Cormorant Garamond', serif;
+    font-style:italic;
+    font-size:1.05rem;
+    line-height:1.5;
+    color:var(--blush-soft);
+    text-align:left;
+    display:none;
+  }
+  .reply-echo.show{ display:block; animation:fadeUp 0.4s ease; }
+  .reply-echo .echo-tag{
+    display:block;
+    font-family:'Quicksand', sans-serif;
+    font-style:normal;
+    font-size:0.7rem;
+    letter-spacing:0.15em;
+    text-transform:uppercase;
+    color:var(--gold);
+    margin-bottom:0.4rem;
+    opacity:0.8;
+  }
+
   footer{
     padding:2rem; text-align:center; font-size:0.75rem;
     color:rgba(248,239,227,0.3); position:relative; z-index:1;
+  }
+
+  footer a{
+    color:#f2a9c4;
   }
 
   @media (max-width:480px){
@@ -365,7 +431,7 @@
     .letter{ font-size:1.1rem; line-height:1.7; margin-bottom:1.8rem; }
     .btn{ padding:0.8rem 1.6rem; font-size:0.9rem; }
     .dodge-caption{
-      font-size:0.82rem;
+      font-size:0.95rem;
       max-width:70vw;
       white-space:normal;
       text-align:center;
@@ -406,8 +472,8 @@
   </div>
   <div class="intro-text" id="introText" style="display:none;">
     <div class="intro-eyebrow">a message</div>
-    <h2>From your dev<span class="dot">.</span></h2>
-    <p>Built this instead of just texting sorry. Open it below.</p>
+    <h2>From your 😭 dev<span class="dot">.</span></h2>
+    <p>Built this with carefully sorry. Open it below.</p>
     <button class="btn" id="enterBtn">Open it</button>
   </div>
 </div>
@@ -415,7 +481,7 @@
 <!-- HERO -->
 <section>
   <div class="eyebrow">a small apology</div>
-  <h1>I know I messed up.<br>Let me <em>make it right.</em></h1>
+  <h1>I know I messed up somewhere.<br>Let me <em> make it right.</em></h1>
   <p class="sub">Before you say anything — just give me two minutes and six flowers. That's all I'm asking.</p>
   <div class="scroll-hint">
     <span>scroll down</span>
@@ -443,19 +509,28 @@
     <div class="letter">
       Every flower here is a small, true thing. I was wrong, and I'm sorry —
       not the lazy kind of sorry, the kind where I actually plan to do better.
-      <span class="name-fill">You</span> matter to me more than being right does.
+      <span class="name-fill">You (as a friend)</span> matter to me more than being right does.
       <span class="signoff">— me, for real this time</span>
     </div>
     <div class="btn-row" id="btnRow">
-      <button class="btn" onclick="respond('yes')">Okay, I forgive you 🌸</button>
-      <button class="btn secondary" id="noBtn" onmouseenter="dodge()" onclick="dodge()" ontouchstart="dodgeTouch(event)">Nah, still mad</button>
+      <button class="btn" onclick="respond('yes')">Okay, I forgive you 🌸, Let's Be Friend</button>
+      <button class="btn secondary" id="noBtn" onmouseenter="dodge()" onclick="dodge()" ontouchstart="dodgeTouch(event)">Nah, i don't talk to you</button>
     </div>
     <div class="dodge-caption" id="dodgeCaption"></div>
     <div class="reply" id="reply"></div>
+
+    <div class="reply-box" id="replyBox">
+      <div class="reply-box-label">want to say something back? </div>
+      <textarea id="replyInput" placeholder="type here..." rows="2"></textarea>
+      <button class="btn secondary small" id="sendReply">Send</button>
+      <div class="reply-echo" id="replyEcho"></div>
+    </div>
   </div>
 </section>
 
-<footer>made with a little bit of dumb and a lot of sorry</footer>
+<footer>made with a little bit of dumb and a lot of sorry<br>
+  You Can Follow Me Here <a href="www.https://instagram.com/debazj" target="_blank">  Devv :( </a>
+</footer>
 
 <script>
   // starfield
@@ -468,8 +543,8 @@
       el.appendChild(s);
     }
   }
-  fillStars(document.getElementById('stars'), 50);
-  fillStars(document.getElementById('introStars'), 40);
+  fillStars(document.getElementById('stars'), 22);
+  fillStars(document.getElementById('introStars'), 18);
 
   // intro envelope sequence
   const envelopeWrap = document.getElementById('envelopeWrap');
@@ -497,7 +572,7 @@
     "You deserved better than how I handled it.",
     "I've been thinking about it, and I get why you're upset.",
     "I miss talking to you like normal. This silence sucks.",
-    "I'm not asking you to forget it — just to let me try again."
+    "I'm asking you to forget it What goes, it never come back! — just let Be Friend Again"
   ];
 
   const flowerSVG = `
@@ -531,7 +606,7 @@
       void messageBox.offsetWidth;
       messageBox.classList.add('show');
       progressEl.textContent = bloomed + ' / 6 bloomed';
-      spawnPetals(3);
+      spawnPetals(2);
       if(bloomed === messages.length){
         setTimeout(()=>{
           document.getElementById('finale').style.display = 'flex';
@@ -557,6 +632,7 @@
   }
 
   function spawnPetals(n){
+    n = Math.min(n, 8);
     for(let i=0;i<n;i++){
       const p = document.createElement('div');
       p.className = 'petal-fall';
@@ -583,13 +659,21 @@
   // runaway "no" button
   const taunts = [
     "you called me a dev, what did you expect 😏",
-    "not today",
     "gonna have to catch me first",
     "this button has trust issues, like you",
     "error 404: forgiveness withheld",
     "nope. try the pink one.",
     "I debugged this specifically for you",
-    "she said 'still mad' and the button said 'lol no'"
+    "she said 'still mad' and the button said 'cute, but no'",
+    "being older doesn't come with faster reflexes 😏",
+    "4 years of seniority and still can't catch me",
+    "your dev coded evasive maneuvers just for you",
+    "not today — your dev's off duty",
+    "catch me if your wisdom helps 😌",
+    "I didn't debug this for just anyone, you know",
+    "careful, chasing me might make you like me more",
+    "your dev, unbothered and undodgeable",
+    "keep trying — I like the attention"
   ];
 
   const noBtn = document.getElementById('noBtn');
@@ -618,7 +702,7 @@
     caption.style.left = capX + 'px';
     caption.style.top = capY + 'px';
     clearTimeout(caption._t);
-    caption._t = setTimeout(()=>caption.classList.remove('show'), 1600);
+    caption._t = setTimeout(()=>caption.classList.remove('show'), 3000);
 
     dodgeCount++;
   }
@@ -631,6 +715,28 @@
     e.preventDefault();
     dodge();
   }
+
+  // reply box — sends her message to your WhatsApp
+  const WHATSAPP_NUMBER = "916372174483";
+  const replyInput = document.getElementById('replyInput');
+  const replyEcho = document.getElementById('replyEcho');
+  document.getElementById('sendReply').addEventListener('click', ()=>{
+    const text = replyInput.value.trim();
+    if(!text) return;
+    replyEcho.innerHTML = '<span class="echo-tag">sending you this</span>' +
+      text.replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    replyEcho.classList.add('show');
+    spawnPetals(4);
+    const waText = encodeURIComponent(text);
+    window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${waText}`, '_blank');
+    replyInput.value = '';
+  });
+  replyInput.addEventListener('keydown', (e)=>{
+    if(e.key === 'Enter' && !e.shiftKey){
+      e.preventDefault();
+      document.getElementById('sendReply').click();
+    }
+  });
 </script>
 
 </body>
