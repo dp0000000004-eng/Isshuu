@@ -3,7 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>for you</title>
+<title>Isshuu</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+CiAgPGNpcmNsZSBjeD0iMTYiIGN5PSIxNiIgcj0iMTYiIGZpbGw9IiMyMjFhMmIiLz4KICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSgxNiwxNy41KSI+CiAgICA8ZWxsaXBzZSBjeD0iMCIgY3k9Ii03LjUiIHJ4PSIzLjYiIHJ5PSI2LjUiIGZpbGw9IiNmMmE5YzQiIHRyYW5zZm9ybT0icm90YXRlKDAgMCAwKSIvPgogICAgPGVsbGlwc2UgY3g9IjAiIGN5PSItNy41IiByeD0iMy42IiByeT0iNi41IiBmaWxsPSIjZjJhOWM0IiB0cmFuc2Zvcm09InJvdGF0ZSg3MiAwIDApIi8+CiAgICA8ZWxsaXBzZSBjeD0iMCIgY3k9Ii03LjUiIHJ4PSIzLjYiIHJ5PSI2LjUiIGZpbGw9IiNmMmE5YzQiIHRyYW5zZm9ybT0icm90YXRlKDE0NCAwIDApIi8+CiAgICA8ZWxsaXBzZSBjeD0iMCIgY3k9Ii03LjUiIHJ4PSIzLjYiIHJ5PSI2LjUiIGZpbGw9IiNmMmE5YzQiIHRyYW5zZm9ybT0icm90YXRlKDIxNiAwIDApIi8+CiAgICA8ZWxsaXBzZSBjeD0iMCIgY3k9Ii03LjUiIHJ4PSIzLjYiIHJ5PSI2LjUiIGZpbGw9IiNmMmE5YzQiIHRyYW5zZm9ybT0icm90YXRlKDI4OCAwIDApIi8+CiAgICA8Y2lyY2xlIHI9IjMuMiIgZmlsbD0iI2U4YzQ2OCIvPgogIDwvZz4KPC9zdmc+Cg==">
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500&family=Quicksand:wght@400;500;600&display=swap');
 
@@ -344,6 +345,17 @@
     to{ transform:translateY(105vh) rotate(400deg); opacity:0.2; }
   }
 
+  .flower-fall{
+    position:fixed; z-index:6; pointer-events:none;
+    animation:flowerFall linear forwards;
+  }
+  .flower-fall svg{ width:100%; height:100%; display:block; }
+  @keyframes flowerFall{
+    0%{ transform:translate(0,0) rotate(0deg) scale(0.6); opacity:0; }
+    15%{ opacity:0.95; transform:translate(0,0) rotate(20deg) scale(1); }
+    100%{ transform:translate(var(--drift,20px), 260px) rotate(380deg) scale(1); opacity:0; }
+  }
+
   footer{
     padding:2rem; text-align:center; font-size:0.75rem;
     color:rgba(248,239,227,0.3); position:relative; z-index:1;
@@ -435,6 +447,53 @@
     color:rgba(248,239,227,0.9);
   }
 
+  /* Random-line hero card */
+  .rl-wrap{ max-width:520px; width:100%; text-align:center; }
+
+  .rl-card{
+    background:linear-gradient(160deg, rgba(242,169,196,0.08), rgba(232,196,104,0.05));
+    border:1px solid rgba(242,169,196,0.22);
+    border-radius:22px;
+    padding:3rem 2rem;
+    cursor:pointer;
+    -webkit-tap-highlight-color:transparent;
+    transition:border-color 0.3s ease, transform 0.2s ease;
+  }
+  .rl-card:hover{ border-color:rgba(242,169,196,0.4); transform:translateY(-2px); }
+  .rl-card:active{ transform:scale(0.98); }
+
+  .rl-icon{
+    width:30px; height:30px;
+    margin:0 auto 1.2rem;
+    color:var(--gold);
+  }
+
+  .rl-text{
+    font-family:'Cormorant Garamond', serif;
+    font-style:italic;
+    font-size:1.3rem;
+    line-height:1.6;
+    color:var(--cream);
+    min-height:80px;
+    display:flex; align-items:center; justify-content:center;
+    opacity:1;
+    transition:opacity 0.3s ease, transform 0.3s ease;
+  }
+  .rl-text.fading{ opacity:0; transform:translateY(6px); }
+
+  .rl-hint{
+    margin-top:1.4rem;
+    font-size:0.75rem;
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    color:rgba(248,239,227,0.4);
+  }
+
+  @media (max-width:480px){
+    .rl-card{ padding:2.4rem 1.5rem; }
+    .rl-text{ font-size:1.12rem; min-height:70px; }
+  }
+
   /* Closing */
   .closing-section{
     gap:1.2rem;
@@ -486,9 +545,9 @@
 
 <!-- HERO -->
 <section>
-  <div class="eyebrow reveal">for you</div>
-  <h1 class="reveal">Just wanted to<br>make something <em>beautiful.</em></h1>
-  <p class="sub reveal">No reason, really. Just felt like it.</p>
+  <div class="eyebrow reveal" id="heroEyebrow">for you</div>
+  <h1 class="reveal" id="heroGreeting">Just wanted to<br>make something <em>beautiful.</em></h1>
+  <p class="sub reveal" id="heroSub">No reason, really. Just felt like it.</p>
   <div class="scroll-hint reveal">
     <span>scroll down</span>
     <div class="arrow"></div>
@@ -502,6 +561,22 @@
     <h2 class="moments-title reveal">Some stuff I keep thinking about</h2>
 
     <div class="timeline" id="timeline"></div>
+  </div>
+</section>
+
+<!-- RANDOM LINE CARD -->
+<section>
+  <div class="rl-wrap">
+    <div class="eyebrow reveal"> Isshuu</div>
+    <h2 class="moments-title reveal">tap for something ...</h2>
+
+    <div class="rl-card reveal" id="rlCard">
+      <svg class="rl-icon" viewBox="0 0 24 24" fill="none">
+        <path d="M12 21s-7.5-4.6-9.8-9C.6 8.2 2.4 4 6.4 4c2 0 3.6 1.1 4.6 2.6C12 5.1 13.6 4 15.6 4c4 0 5.8 4.2 4.2 8-2.3 4.4-7.8 9-7.8 9z" stroke="currentColor" stroke-width="1.4"/>
+      </svg>
+      <div class="rl-text" id="rlText">tap here</div>
+      <div class="rl-hint">tap again for another</div>
+    </div>
   </div>
 </section>
 
@@ -560,12 +635,42 @@
   fillStars(document.getElementById('stars'), 22);
   fillStars(document.getElementById('introStars'), 18);
 
+  // Live greeting based on current time in India (IST)
+  const HER_NAME = "Isshuu";
+
+  function getISTHour(){
+    const istString = new Date().toLocaleString('en-US', {
+      timeZone: 'Asia/Kolkata',
+      hour: 'numeric',
+      hour12: false
+    });
+    return parseInt(istString, 10) % 24;
+  }
+
+  function applyGreeting(){
+    const hour = getISTHour();
+    let period, sub;
+    if(hour >= 5 && hour < 12){
+      period = 'Morning'; sub = "Sorry,  May I sleep ";
+    } else if(hour >= 12 && hour < 17){
+      period = 'Afternoon'; sub = "Hope your day's treating you well so far.";
+    } else if(hour >= 17 && hour < 21){
+      period = 'Evening'; sub = "Hope today wasn't too much to handle.";
+    } else {
+      period = 'Night'; sub = "Hope you rest well tonight.";
+    }
+    document.getElementById('heroEyebrow').textContent = 'Hey ' + HER_NAME;
+    document.getElementById('heroGreeting').innerHTML = `Good <em>${period}</em>,<br>${HER_NAME}.`;
+    document.getElementById('heroSub').textContent = sub;
+  }
+  applyGreeting();
+
   // EDIT THESE — a few real moments, short and specific
   const moments = [
-    { tag: "that one time", text: "You said something that stuck with me for way longer than it should've." },
-    { tag: "random thursday", text: "We talked about nothing for two hours and it didn't feel like nothing." },
-    { tag: "still thinking about it", text: "The way you laugh at your own jokes before finishing them." },
-    { tag: "honestly", text: "You make ordinary days feel a little less ordinary." }
+    { tag: "that one dialog", text: "marungi thapad..😭" },
+    { tag: "random silence", text: "We talked about nothing for hours and it didn't feel like nothing." },
+    { tag: "still thinking about it", text: "How You Can Soo Perfect" },
+    { tag: "honestly", text: "You Are the Best" }
   ];
 
   const timelineEl = document.getElementById('timeline');
@@ -574,6 +679,38 @@
     item.className = 'timeline-item reveal';
     item.innerHTML = `<div class="timeline-tag">${m.tag}</div><div class="timeline-text">${m.text}</div>`;
     timelineEl.appendChild(item);
+  });
+
+  // EDIT THIS — pool of lines for Isshuu, one shows at random per tap
+  const randomLines = [
+    "Good morning, Isshuu. Hope your coffee's warm and your day is kind to you.",
+    "Wake up, Isshuu — the world's just a little better with you awake in it.",
+    "Morning already? Go be brilliant today, Isshuu.",
+    "Goodnight, Isshuu. Rest well — you've earned it.",
+    "Sleep tight, Isshuu. Tomorrow's lucky to have you again.",
+    "Close your eyes, Isshuu. I'll see you in the morning.",
+    "You cross my mind more than you'd probably guess, Isshuu.",
+    "No reason. Just thought you should know you matter, Isshuu.",
+    "Whatever today looked like, I hope some part of it was easy, Isshuu.",
+    "You're doing better than you think you are, Isshuu."
+  ];
+
+  const rlCard = document.getElementById('rlCard');
+  const rlText = document.getElementById('rlText');
+  let lastIndex = -1;
+
+  rlCard.addEventListener('click', ()=>{
+    let idx;
+    do { idx = Math.floor(Math.random() * randomLines.length); }
+    while(idx === lastIndex && randomLines.length > 1);
+    lastIndex = idx;
+
+    rlText.classList.add('fading');
+    setTimeout(()=>{
+      rlText.textContent = randomLines[idx];
+      rlText.classList.remove('fading');
+    }, 280);
+
   });
 
   // scroll reveal — lightweight, one-time trigger
@@ -647,13 +784,48 @@
     }
   }
 
+  function spawnFlowers(n, originX, originY){
+    n = Math.min(n, 6);
+    const hasOrigin = typeof originX === 'number';
+    for(let i=0;i<n;i++){
+      const f = document.createElement('div');
+      f.className = 'flower-fall';
+      const size = 14 + Math.random()*12;
+      if(hasOrigin){
+        f.style.left = (originX + (Math.random()*50-25)) + 'px';
+        f.style.top = (originY + (Math.random()*20-10)) + 'px';
+      } else {
+        f.style.left = Math.random()*100+'vw';
+        f.style.top = '-40px';
+      }
+      f.style.width = f.style.height = size+'px';
+      f.style.setProperty('--drift', (Math.random()*70-35)+'px');
+      f.style.animationDuration = (1.6+Math.random()*1.2)+'s';
+      f.innerHTML = flowerSVG;
+      document.body.appendChild(f);
+      setTimeout(()=>f.remove(), 3200);
+    }
+  }
+
+  // flowers fall on tap anywhere on the page
+  let lastFlowerTap = 0;
+  document.addEventListener('click', (e)=>{
+    const now = Date.now();
+    if(now - lastFlowerTap < 120) return; // avoid double-fire from nested clicks
+    lastFlowerTap = now;
+    spawnFlowers(4, e.clientX, e.clientY);
+  });
+
   // EDIT THIS — the letter, revealed line by line
   const letterContent = [
     { type:'whisper', text:"There's something I've been wanting to tell you..." },
     { type:'divider' },
-    { type:'line', text:"I don't need a reason to do something nice for you." },
-    { type:'line', text:"You make ordinary days feel less ordinary." },
-    { type:'line', text:"So here's a small, useless, beautiful thing — just because." },
+    { type:'line', text:"Apke joke me has saku. " },
+    { type:'line', text:"Apke Dukh me dukhi ho saku." },
+    { type:'line', text:"Apke Success me Kush ha saku." },
+    { type:'line', text:"Apke Girabwat me support ban saku." },
+    { type:'line', text:"At last apse Inspired ho saku." },
+    { type:'whisper', text:"There are a special spot in heart forever." },
     { type:'signoff', text:"— your dev" }
   ];
 
