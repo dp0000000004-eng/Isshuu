@@ -167,93 +167,20 @@
   }
   @keyframes dropdown{ 0%{transform:scaleY(0); transform-origin:top} 50%{transform:scaleY(1); transform-origin:top} 100%{transform:scaleY(0); transform-origin:bottom} }
 
-  /* Garden */
-  .garden-wrap{ max-width:640px; width:100%; }
-  .garden-title{
-    font-family:'Cormorant Garamond', serif;
-    font-size:clamp(1.6rem, 4vw, 2.3rem);
-    margin-bottom:0.6rem;
-  }
-  .garden-note{
-    color:rgba(248,239,227,0.65);
-    font-size:0.95rem;
-    margin-bottom:3rem;
-  }
-
-  .plots{
-    display:grid;
-    grid-template-columns:repeat(3, 1fr);
-    gap:1.6rem 1.2rem;
-    width:100%;
-  }
-
-  .plot{
-    background:rgba(255,255,255,0.03);
-    border:1px solid rgba(255,255,255,0.08);
-    border-radius:14px;
-    padding:1.6rem 0.8rem 1.2rem;
-    cursor:pointer;
-    transition:transform 0.25s ease, background 0.25s ease, border-color 0.25s ease;
-    display:flex; flex-direction:column; align-items:center; gap:0.7rem;
-    -webkit-tap-highlight-color:transparent;
-  }
-  .plot:hover{ transform:translateY(-3px); background:rgba(255,255,255,0.05); }
-  .plot.bloomed{
-    border-color:rgba(242,169,196,0.4);
-    background:rgba(242,169,196,0.06);
-    cursor:default;
-  }
-
-  .flower{ width:56px; height:56px; }
-  .flower .petal{ transition:all 0.5s ease; transform-origin:center; }
-  .plot:not(.bloomed) .petal{ fill:#4a4256; }
-  .plot:not(.bloomed) .center{ fill:#3a3444; }
-  .plot:not(.bloomed) .stem{ stroke:#4a4256; }
-
-  .plot.bloomed .petal{ fill:var(--blush); }
-  .plot.bloomed .center{ fill:var(--gold); }
-  .plot.bloomed .stem{ stroke:var(--stem); }
-  .plot.bloomed .flower{ animation:pop 0.55s cubic-bezier(.34,1.56,.64,1); }
-  @keyframes pop{ 0%{ transform:scale(0.4) rotate(-8deg); opacity:0.3 } 100%{ transform:scale(1) rotate(0); opacity:1 } }
-
-  .plot-label{
-    font-size:0.72rem;
-    letter-spacing:0.05em;
-    color:rgba(248,239,227,0.4);
-  }
-  .plot.bloomed .plot-label{ color:rgba(248,239,227,0.7); }
-
-  .message-box{
-    margin-top:2.6rem;
-    min-height:70px;
-    max-width:480px;
-    font-family:'Cormorant Garamond', serif;
-    font-style:italic;
-    font-size:1.35rem;
-    line-height:1.6;
-    color:var(--blush-soft);
-    opacity:0;
-    transform:translateY(6px);
-    transition:opacity 0.5s ease, transform 0.5s ease;
-  }
-  .message-box.show{ opacity:1; transform:translateY(0); }
-
-  .progress{
-    margin-top:2rem;
-    font-size:0.8rem;
-    letter-spacing:0.15em;
-    color:rgba(248,239,227,0.4);
-    text-transform:uppercase;
-  }
+  .flower{ width:34px; height:34px; }
+  .flower .petal{ fill:var(--blush); }
+  .flower .center{ fill:var(--gold); }
+  .flower .stem{ stroke:var(--stem); }
 
   /* Finale */
   .finale-card{
     background:linear-gradient(160deg, rgba(242,169,196,0.08), rgba(232,196,104,0.05));
     border:1px solid rgba(242,169,196,0.25);
-    border-radius:22px;
-    padding:3.2rem 2.4rem;
-    max-width:520px;
+    border-radius:26px;
+    padding:3.8rem 2.8rem;
+    max-width:620px;
     width:100%;
+    box-shadow:0 0 80px rgba(242,169,196,0.06);
   }
 
   .finale-flowers{
@@ -261,21 +188,138 @@
   }
   .finale-flowers svg{ width:34px; height:34px; }
 
+  /* Wax seal — hold to melt mini-game */
+  .seal-wrap{
+    display:flex; flex-direction:column; align-items:center; gap:1.2rem;
+    padding:1.5rem 0;
+    position:relative;
+  }
+  .seal-stage{
+    position:relative;
+    width:130px; height:130px;
+    display:flex; align-items:center; justify-content:center;
+    cursor:pointer;
+    -webkit-tap-highlight-color:transparent;
+    touch-action:none;
+    user-select:none;
+  }
+
+  .seal-ring{ position:absolute; inset:0; transform:rotate(-90deg); }
+  .seal-ring circle{ fill:none; }
+  .seal-ring .track{ stroke:rgba(248,239,227,0.1); stroke-width:3; }
+  .seal-ring .fill{
+    stroke:var(--gold);
+    stroke-width:3;
+    stroke-linecap:round;
+    stroke-dasharray:326;
+    stroke-dashoffset:326;
+    transition:stroke-dashoffset 0.05s linear;
+    filter:drop-shadow(0 0 4px rgba(232,196,104,0.6));
+  }
+
+  .flame{
+    position:absolute;
+    top:-6px; left:50%;
+    transform:translateX(-50%);
+    width:16px; height:22px;
+    opacity:0;
+    transition:opacity 0.3s ease;
+    pointer-events:none;
+  }
+  .seal-stage.holding .flame{ opacity:1; animation:flicker 0.35s ease-in-out infinite alternate; }
+  @keyframes flicker{
+    0%{ transform:translateX(-50%) scale(1) rotate(-2deg); }
+    100%{ transform:translateX(-50%) scale(1.12) rotate(2deg); }
+  }
+
+  .seal{
+    width:88px; height:88px;
+    border-radius:50%;
+    background:radial-gradient(circle at 35% 30%, #e8879e, var(--blush) 60%, #c9789a 100%);
+    display:flex; align-items:center; justify-content:center;
+    box-shadow:0 6px 22px rgba(242,169,196,0.35), inset 0 -4px 10px rgba(0,0,0,0.15);
+    animation:sealPulse 2.4s ease-in-out infinite;
+    transition:transform 0.15s ease, opacity 0.4s ease, filter 0.15s ease;
+    position:relative;
+    overflow:visible;
+  }
+  @keyframes sealPulse{ 0%,100%{ box-shadow:0 6px 22px rgba(242,169,196,0.35), inset 0 -4px 10px rgba(0,0,0,0.15) } 50%{ box-shadow:0 6px 30px rgba(242,169,196,0.55), inset 0 -4px 10px rgba(0,0,0,0.15) } }
+  .seal-stage.holding .seal{
+    animation:none;
+    filter:brightness(1.15) saturate(1.1);
+  }
+  .seal svg{ width:38px; height:38px; }
+
+  .seal-wrap.melting .seal{ animation:meltAway 0.7s cubic-bezier(.4,0,.6,1) forwards; }
+  @keyframes meltAway{
+    0%{ transform:scale(1); border-radius:50%; }
+    40%{ transform:scale(1.08) translateY(4px); border-radius:45% 45% 60% 60%; }
+    100%{ transform:scale(0.2) translateY(30px); border-radius:0%; opacity:0; }
+  }
+
+  .wax-drip{
+    position:absolute;
+    top:60%; left:50%;
+    width:6px; height:6px;
+    background:var(--blush);
+    border-radius:50% 50% 60% 60%;
+    pointer-events:none;
+    animation:drip 0.9s ease-in forwards;
+  }
+  @keyframes drip{
+    0%{ transform:translate(-50%,0) scaleY(1); opacity:0.9; }
+    100%{ transform:translate(-50%,60px) scaleY(1.6); opacity:0; }
+  }
+
+  .seal-caption{
+    font-family:'Cormorant Garamond', serif;
+    font-style:italic;
+    font-size:1rem;
+    color:rgba(248,239,227,0.55);
+    letter-spacing:0.03em;
+    transition:opacity 0.3s ease;
+  }
+
+  /* Letter lines — arrive one at a time */
   .letter{
     font-family:'Cormorant Garamond', serif;
-    font-size:1.3rem;
-    line-height:1.85;
+    font-size:1.4rem;
+    line-height:2;
     color:var(--cream);
     text-align:left;
-    margin-bottom:2.2rem;
+    margin-bottom:0;
   }
   .letter .name-fill{ color:var(--blush-soft); font-style:italic; }
   .signoff{
     display:block;
-    margin-top:1rem;
+    margin-top:1.2rem;
     font-style:italic;
     color:var(--gold);
   }
+
+  .letter-line{
+    opacity:0;
+    transform:translateY(10px);
+    transition:opacity 1s ease, transform 1s ease;
+    margin-bottom:0.9rem;
+  }
+  .letter-line.show{ opacity:1; transform:translateY(0); }
+  .letter-line.whisper{
+    font-style:italic;
+    color:rgba(246,201,220,0.75);
+    font-size:1.15rem;
+    letter-spacing:0.02em;
+    text-align:center;
+    margin-bottom:1.8rem;
+  }
+  .letter-divider{
+    width:44px; height:1px;
+    background:linear-gradient(to right, transparent, rgba(232,196,104,0.6), transparent);
+    margin:0 auto 1.8rem;
+    opacity:0;
+    transition:opacity 1s ease;
+  }
+  .letter-divider.show{ opacity:1; }
 
   .btn{
     font-family:'Quicksand', sans-serif;
@@ -292,122 +336,12 @@
   }
   .btn:hover{ transform:scale(1.04); background:var(--blush-soft); }
 
-  .btn-row{
-    display:flex; gap:0.8rem; justify-content:center; flex-wrap:wrap;
-    position:relative; min-height:52px;
-  }
-  .btn.secondary{
-    background:transparent;
-    border:1px solid rgba(248,239,227,0.35);
-    color:var(--cream);
-  }
-  .btn.secondary:hover{ background:rgba(255,255,255,0.06); transform:scale(1.04); }
-
-  .reply{
-    margin-top:1.6rem;
-    font-family:'Cormorant Garamond', serif;
-    font-size:1.15rem;
-    font-style:italic;
-    color:var(--sage);
-    min-height:28px;
-  }
-
-  #noBtn{
-    position:relative;
-    touch-action:manipulation;
-    transition:transform 0.18s ease, background 0.18s ease;
-  }
-  #noBtn.fleeing{
-    position:fixed;
-    z-index:20;
-  }
-
-  .dodge-caption{
-    position:fixed;
-    z-index:21;
-    font-family:'Cormorant Garamond', serif;
-    font-style:italic;
-    font-size:1.05rem;
-    color:var(--gold);
-    background:rgba(34,26,43,0.95);
-    border:1px solid rgba(232,196,104,0.3);
-    padding:0.4rem 1rem;
-    border-radius:10px;
-    pointer-events:none;
-    opacity:0;
-    transition:opacity 0.4s ease;
-    white-space:nowrap;
-  }
-  .dodge-caption.show{ opacity:1; }
-
   .petal-fall{
     position:fixed; top:-20px; z-index:5; pointer-events:none;
     animation:fall linear forwards;
   }
   @keyframes fall{
     to{ transform:translateY(105vh) rotate(400deg); opacity:0.2; }
-  }
-
-  /* Reply box */
-  .reply-box{
-    margin-top:2.4rem;
-    padding-top:1.8rem;
-    border-top:1px solid rgba(248,239,227,0.1);
-  }
-  .reply-box-label{
-    font-family:'Cormorant Garamond', serif;
-    font-style:italic;
-    font-size:1rem;
-    color:rgba(248,239,227,0.6);
-    margin-bottom:0.8rem;
-  }
-  #replyInput{
-    width:100%;
-    resize:vertical;
-    min-height:60px;
-    font-family:'Quicksand', sans-serif;
-    font-size:0.95rem;
-    color:var(--cream);
-    background:rgba(255,255,255,0.04);
-    border:1px solid rgba(248,239,227,0.15);
-    border-radius:12px;
-    padding:0.8rem 1rem;
-    margin-bottom:0.8rem;
-  }
-  #replyInput:focus{
-    outline:none;
-    border-color:rgba(242,169,196,0.45);
-    background:rgba(255,255,255,0.06);
-  }
-  #replyInput::placeholder{ color:rgba(248,239,227,0.3); }
-
-  .btn.small{ padding:0.6rem 1.6rem; font-size:0.85rem; }
-
-  .reply-echo{
-    margin-top:1.2rem;
-    padding:1rem 1.2rem;
-    background:rgba(242,169,196,0.07);
-    border:1px solid rgba(242,169,196,0.2);
-    border-radius:12px;
-    font-family:'Cormorant Garamond', serif;
-    font-style:italic;
-    font-size:1.05rem;
-    line-height:1.5;
-    color:var(--blush-soft);
-    text-align:left;
-    display:none;
-  }
-  .reply-echo.show{ display:block; animation:fadeUp 0.4s ease; }
-  .reply-echo .echo-tag{
-    display:block;
-    font-family:'Quicksand', sans-serif;
-    font-style:normal;
-    font-size:0.7rem;
-    letter-spacing:0.15em;
-    text-transform:uppercase;
-    color:var(--gold);
-    margin-bottom:0.4rem;
-    opacity:0.8;
   }
 
   footer{
@@ -421,36 +355,108 @@
 
   @media (max-width:480px){
     section{ padding:6vh 5vw; }
-    .plots{ grid-template-columns:repeat(3,1fr); gap:0.9rem 0.5rem; }
-    .plot{ padding:1.1rem 0.4rem 0.9rem; border-radius:12px; }
-    .flower{ width:40px; height:40px; }
-    .plot-label{ font-size:0.65rem; }
-    .message-box{ font-size:1.15rem; padding:0 2vw; }
-    .garden-note{ margin-bottom:2.2rem; font-size:0.88rem; }
     .finale-card{ padding:2.2rem 1.4rem; border-radius:18px; }
     .letter{ font-size:1.1rem; line-height:1.7; margin-bottom:1.8rem; }
     .btn{ padding:0.8rem 1.6rem; font-size:0.9rem; }
-    .dodge-caption{
-      font-size:0.95rem;
-      max-width:70vw;
-      white-space:normal;
-      text-align:center;
-    }
     .envelope{ width:min(70vw, 200px); }
     .intro-text p{ font-size:0.92rem; }
     .sub{ font-size:0.98rem; }
     .scroll-hint{ margin-top:2.4rem; }
+    .timeline{ padding-left:1.2rem; gap:1.8rem; }
+    .timeline-text{ font-size:1.1rem; }
+    .moments-title{ margin-bottom:2.2rem; }
+    .closing-line{ font-size:1.35rem; }
+    .seal-stage{ width:112px; height:112px; }
   }
 
   @media (max-width:360px){
     h1{ font-size:1.9rem; }
-    .plots{ gap:0.7rem 0.4rem; }
-    .flower{ width:34px; height:34px; }
     .finale-flowers svg{ width:26px; height:26px; }
   }
 
   @media (prefers-reduced-motion: reduce){
     *{ animation:none !important; transition:none !important; }
+  }
+
+  /* Scroll reveal */
+  .reveal{
+    opacity:0;
+    transform:translateY(18px);
+    transition:opacity 0.8s ease, transform 0.8s ease;
+  }
+  .reveal.in-view{
+    opacity:1;
+    transform:translateY(0);
+  }
+
+  /* Moments / timeline */
+  .moments-wrap{ max-width:600px; width:100%; text-align:center; }
+  .moments-title{
+    font-family:'Cormorant Garamond', serif;
+    font-weight:600;
+    font-size:clamp(1.8rem, 4.5vw, 2.6rem);
+    margin-bottom:3rem;
+  }
+
+  .timeline{
+    text-align:left;
+    display:flex;
+    flex-direction:column;
+    gap:2.2rem;
+    border-left:1px solid rgba(248,239,227,0.15);
+    padding-left:1.6rem;
+  }
+
+  .timeline-item{
+    position:relative;
+  }
+  .timeline-item::before{
+    content:'';
+    position:absolute;
+    left:-1.86rem;
+    top:0.35rem;
+    width:9px; height:9px;
+    border-radius:50%;
+    background:var(--blush);
+    box-shadow:0 0 0 4px rgba(242,169,196,0.15);
+  }
+  .timeline-tag{
+    font-size:0.7rem;
+    letter-spacing:0.15em;
+    text-transform:uppercase;
+    color:var(--gold);
+    opacity:0.8;
+    margin-bottom:0.4rem;
+  }
+  .timeline-text{
+    font-family:'Cormorant Garamond', serif;
+    font-size:1.25rem;
+    line-height:1.6;
+    color:rgba(248,239,227,0.9);
+  }
+
+  /* Closing */
+  .closing-section{
+    gap:1.2rem;
+  }
+  .closing-glow{
+    width:10px; height:10px;
+    border-radius:50%;
+    background:var(--blush);
+    box-shadow:0 0 20px 6px rgba(242,169,196,0.4);
+    margin-bottom:1rem;
+    animation:breathe 3s ease-in-out infinite;
+  }
+  @keyframes breathe{ 0%,100%{ transform:scale(1); opacity:0.7 } 50%{ transform:scale(1.6); opacity:1 } }
+  .closing-line{
+    font-family:'Cormorant Garamond', serif;
+    font-style:italic;
+    font-size:1.6rem;
+    color:var(--cream);
+  }
+  .closing-sub{
+    font-size:0.9rem;
+    color:rgba(248,239,227,0.5);
   }
 </style>
 </head>
@@ -472,64 +478,72 @@
   </div>
   <div class="intro-text" id="introText" style="display:none;">
     <div class="intro-eyebrow">a message</div>
-    <h2>From your 😭 dev<span class="dot">.</span></h2>
-    <p>Built this with carefully sorry. Open it below.</p>
+    <h2>From your dev<span class="dot">.</span></h2>
+    <p>Made you something. Open it below.</p>
     <button class="btn" id="enterBtn">Open it</button>
   </div>
 </div>
 
 <!-- HERO -->
 <section>
-  <div class="eyebrow">a small apology</div>
-  <h1>I know I messed up somewhere.<br>Let me <em> make it right.</em></h1>
-  <p class="sub">Before you say anything — just give me two minutes and six flowers. That's all I'm asking.</p>
-  <div class="scroll-hint">
+  <div class="eyebrow reveal">for you</div>
+  <h1 class="reveal">Just wanted to<br>make something <em>beautiful.</em></h1>
+  <p class="sub reveal">No reason, really. Just felt like it.</p>
+  <div class="scroll-hint reveal">
     <span>scroll down</span>
     <div class="arrow"></div>
   </div>
 </section>
 
-<!-- GARDEN -->
+<!-- MOMENTS -->
 <section>
-  <div class="garden-wrap">
-    <div class="garden-title">This garden went quiet because of me.</div>
-    <div class="garden-note">Tap each patch to bring it back — one flower, one reason.</div>
+  <div class="moments-wrap">
+    <div class="eyebrow reveal">a few things</div>
+    <h2 class="moments-title reveal">Some stuff I keep thinking about</h2>
 
-    <div class="plots" id="plots"></div>
-
-    <div class="message-box" id="messageBox"></div>
-    <div class="progress" id="progress">0 / 6 bloomed</div>
+    <div class="timeline" id="timeline"></div>
   </div>
 </section>
 
 <!-- FINALE -->
-<section id="finale" style="display:none;">
+<section id="finale">
   <div class="finale-card">
-    <div class="finale-flowers" id="finaleFlowers"></div>
-    <div class="letter">
-      Every flower here is a small, true thing. I was wrong, and I'm sorry —
-      not the lazy kind of sorry, the kind where I actually plan to do better.
-      <span class="name-fill">You (as a friend)</span> matter to me more than being right does.
-      <span class="signoff">— me, for real this time</span>
-    </div>
-    <div class="btn-row" id="btnRow">
-      <button class="btn" onclick="respond('yes')">Okay, I forgive you 🌸, Let's Be Friend</button>
-      <button class="btn secondary" id="noBtn" onmouseenter="dodge()" onclick="dodge()" ontouchstart="dodgeTouch(event)">Nah, i don't talk to you</button>
-    </div>
-    <div class="dodge-caption" id="dodgeCaption"></div>
-    <div class="reply" id="reply"></div>
 
-    <div class="reply-box" id="replyBox">
-      <div class="reply-box-label">want to say something back? </div>
-      <textarea id="replyInput" placeholder="type here..." rows="2"></textarea>
-      <button class="btn secondary small" id="sendReply">Send</button>
-      <div class="reply-echo" id="replyEcho"></div>
+    <div class="seal-wrap" id="sealWrap">
+      <div class="seal-stage" id="sealStage">
+        <svg class="seal-ring" viewBox="0 0 116 116">
+          <circle class="track" cx="58" cy="58" r="52"/>
+          <circle class="fill" id="sealRingFill" cx="58" cy="58" r="52"/>
+        </svg>
+        <svg class="flame" viewBox="0 0 16 22" fill="none">
+          <path d="M8 0c2 4-3 6-3 10a3 3 0 0 0 6 0c0-1-1-2-1-3 2 1 3 4 3 6a5 5 0 0 1-10 0C3 9 6 6 8 0z" fill="#f6c95a"/>
+        </svg>
+        <div class="seal">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path d="M12 21s-7.5-4.6-9.8-9C.6 8.2 2.4 4 6.4 4c2 0 3.6 1.1 4.6 2.6C12 5.1 13.6 4 15.6 4c4 0 5.8 4.2 4.2 8-2.3 4.4-7.8 9-7.8 9z" stroke="#221a2b" stroke-width="1.4" fill="rgba(34,26,43,0.15)"/>
+          </svg>
+        </div>
+      </div>
+      <div class="seal-caption" id="sealCaption">press and hold to melt the seal</div>
     </div>
+
+    <div class="letter-reveal" id="letterReveal" style="display:none;">
+      <div class="finale-flowers" id="finaleFlowers"></div>
+      <div class="letter" id="letterLines"></div>
+    </div>
+
   </div>
 </section>
 
+<!-- CLOSING -->
+<section class="closing-section">
+  <div class="closing-glow reveal"></div>
+  <p class="closing-line reveal">that's all, for now.</p>
+  <p class="closing-sub reveal">but there's always more where this came from.</p>
+</section>
+
 <footer>made with a little bit of dumb and a lot of sorry<br>
-  You Can Follow Me Here <a href="www.https://instagram.com/debazj" target="_blank">  Devv :( </a>
+  You Can Follow Me Here <a href="https://instagram.com/debazj" target="_blank">Devv :)</a>
 </footer>
 
 <script>
@@ -545,6 +559,33 @@
   }
   fillStars(document.getElementById('stars'), 22);
   fillStars(document.getElementById('introStars'), 18);
+
+  // EDIT THESE — a few real moments, short and specific
+  const moments = [
+    { tag: "that one time", text: "You said something that stuck with me for way longer than it should've." },
+    { tag: "random thursday", text: "We talked about nothing for two hours and it didn't feel like nothing." },
+    { tag: "still thinking about it", text: "The way you laugh at your own jokes before finishing them." },
+    { tag: "honestly", text: "You make ordinary days feel a little less ordinary." }
+  ];
+
+  const timelineEl = document.getElementById('timeline');
+  moments.forEach((m)=>{
+    const item = document.createElement('div');
+    item.className = 'timeline-item reveal';
+    item.innerHTML = `<div class="timeline-tag">${m.tag}</div><div class="timeline-text">${m.text}</div>`;
+    timelineEl.appendChild(item);
+  });
+
+  // scroll reveal — lightweight, one-time trigger
+  const revealObserver = new IntersectionObserver((entries)=>{
+    entries.forEach(entry=>{
+      if(entry.isIntersecting){
+        entry.target.classList.add('in-view');
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15 });
+  document.querySelectorAll('.reveal').forEach(el=>revealObserver.observe(el));
 
   // intro envelope sequence
   const envelopeWrap = document.getElementById('envelopeWrap');
@@ -565,16 +606,6 @@
     introOverlay.classList.add('hidden');
   });
 
-  // EDIT THESE 6 MESSAGES — make them true and specific to what happened
-  const messages = [
-    "I'm sorry for what I said. It came out wrong and I didn't mean to hurt you.",
-    "I should've listened instead of getting defensive.",
-    "You deserved better than how I handled it.",
-    "I've been thinking about it, and I get why you're upset.",
-    "I miss talking to you like normal. This silence sucks.",
-    "I'm asking you to forget it What goes, it never come back! — just let Be Friend Again"
-  ];
-
   const flowerSVG = `
     <svg class="flower" viewBox="0 0 60 60">
       <line class="stem" x1="30" y1="60" x2="30" y2="34" stroke-width="3" stroke-linecap="round"/>
@@ -587,36 +618,6 @@
       </g>
       <circle class="center" cx="30" cy="24" r="6"/>
     </svg>`;
-
-  const plotsEl = document.getElementById('plots');
-  const messageBox = document.getElementById('messageBox');
-  const progressEl = document.getElementById('progress');
-  let bloomed = 0;
-
-  messages.forEach((msg, i)=>{
-    const div = document.createElement('div');
-    div.className = 'plot';
-    div.innerHTML = flowerSVG + `<div class="plot-label">patch ${i+1}</div>`;
-    div.addEventListener('click', ()=>{
-      if(div.classList.contains('bloomed')) return;
-      div.classList.add('bloomed');
-      bloomed++;
-      messageBox.textContent = '"' + msg + '"';
-      messageBox.classList.remove('show');
-      void messageBox.offsetWidth;
-      messageBox.classList.add('show');
-      progressEl.textContent = bloomed + ' / 6 bloomed';
-      spawnPetals(2);
-      if(bloomed === messages.length){
-        setTimeout(()=>{
-          document.getElementById('finale').style.display = 'flex';
-          document.getElementById('finale').scrollIntoView({behavior:'smooth'});
-          buildFinaleFlowers();
-        }, 700);
-      }
-    });
-    plotsEl.appendChild(div);
-  });
 
   function buildFinaleFlowers(){
     const el = document.getElementById('finaleFlowers');
@@ -646,97 +647,118 @@
     }
   }
 
-  function respond(kind){
-    const reply = document.getElementById('reply');
-    if(kind === 'yes'){
-      reply.textContent = "Thank you. I won't waste it 🌿";
-      spawnPetals(20);
-    } else {
-      reply.textContent = "Take your time — I'll still be here.";
-    }
-  }
-
-  // runaway "no" button
-  const taunts = [
-    "you called me a dev, what did you expect 😏",
-    "gonna have to catch me first",
-    "this button has trust issues, like you",
-    "error 404: forgiveness withheld",
-    "nope. try the pink one.",
-    "I debugged this specifically for you",
-    "she said 'still mad' and the button said 'cute, but no'",
-    "being older doesn't come with faster reflexes 😏",
-    "4 years of seniority and still can't catch me",
-    "your dev coded evasive maneuvers just for you",
-    "not today — your dev's off duty",
-    "catch me if your wisdom helps 😌",
-    "I didn't debug this for just anyone, you know",
-    "careful, chasing me might make you like me more",
-    "your dev, unbothered and undodgeable",
-    "keep trying — I like the attention"
+  // EDIT THIS — the letter, revealed line by line
+  const letterContent = [
+    { type:'whisper', text:"There's something I've been wanting to tell you..." },
+    { type:'divider' },
+    { type:'line', text:"I don't need a reason to do something nice for you." },
+    { type:'line', text:"You make ordinary days feel less ordinary." },
+    { type:'line', text:"So here's a small, useless, beautiful thing — just because." },
+    { type:'signoff', text:"— your dev" }
   ];
 
-  const noBtn = document.getElementById('noBtn');
-  const caption = document.getElementById('dodgeCaption');
-  let dodgeCount = 0;
+  const sealWrap = document.getElementById('sealWrap');
+  const sealStage = document.getElementById('sealStage');
+  const sealRingFill = document.getElementById('sealRingFill');
+  const sealCaption = document.getElementById('sealCaption');
+  const letterReveal = document.getElementById('letterReveal');
+  const letterLinesEl = document.getElementById('letterLines');
 
-  function placeRandomly(){
-    const w = noBtn.offsetWidth || 140;
-    const h = noBtn.offsetHeight || 44;
-    const margin = 16;
-    const maxX = Math.max(margin, window.innerWidth - w - margin);
-    const maxY = Math.max(margin, window.innerHeight - h - margin);
-    const x = margin + Math.random()*(maxX - margin);
-    const y = margin + Math.random()*(maxY - margin);
-    noBtn.classList.add('fleeing');
-    noBtn.style.left = x + 'px';
-    noBtn.style.top = y + 'px';
+  const RING_CIRC = 326;
+  const HOLD_MS = 1800;
+  let holdStart = null;
+  let holdRAF = null;
+  let dripTimer = null;
+  let sealDone = false;
 
-    caption.textContent = taunts[dodgeCount % taunts.length];
-    caption.style.left = '0px';
-    caption.style.top = '0px';
-    caption.classList.add('show');
-    const capW = caption.offsetWidth;
-    const capX = Math.min(Math.max(10, x - capW/2 + w/2), window.innerWidth - capW - 10);
-    const capY = Math.max(10, y - 44);
-    caption.style.left = capX + 'px';
-    caption.style.top = capY + 'px';
-    clearTimeout(caption._t);
-    caption._t = setTimeout(()=>caption.classList.remove('show'), 3000);
-
-    dodgeCount++;
+  function updateRing(progress){
+    const offset = RING_CIRC * (1 - progress);
+    sealRingFill.style.strokeDashoffset = offset;
   }
 
-  function dodge(){
-    placeRandomly();
-  }
-
-  function dodgeTouch(e){
-    e.preventDefault();
-    dodge();
-  }
-
-  // reply box — sends her message to your WhatsApp
-  const WHATSAPP_NUMBER = "916372174483";
-  const replyInput = document.getElementById('replyInput');
-  const replyEcho = document.getElementById('replyEcho');
-  document.getElementById('sendReply').addEventListener('click', ()=>{
-    const text = replyInput.value.trim();
-    if(!text) return;
-    replyEcho.innerHTML = '<span class="echo-tag">sending you this</span>' +
-      text.replace(/</g,'&lt;').replace(/>/g,'&gt;');
-    replyEcho.classList.add('show');
-    spawnPetals(4);
-    const waText = encodeURIComponent(text);
-    window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${waText}`, '_blank');
-    replyInput.value = '';
-  });
-  replyInput.addEventListener('keydown', (e)=>{
-    if(e.key === 'Enter' && !e.shiftKey){
-      e.preventDefault();
-      document.getElementById('sendReply').click();
+  function tickHold(){
+    if(!holdStart) return;
+    const elapsed = performance.now() - holdStart;
+    const progress = Math.min(elapsed / HOLD_MS, 1);
+    updateRing(progress);
+    if(progress >= 1){
+      completeMelt();
+      return;
     }
+    holdRAF = requestAnimationFrame(tickHold);
+  }
+
+  function spawnDrip(){
+    const d = document.createElement('div');
+    d.className = 'wax-drip';
+    d.style.left = (45 + Math.random()*10) + '%';
+    sealStage.appendChild(d);
+    setTimeout(()=>d.remove(), 950);
+  }
+
+  function startHold(){
+    if(sealDone) return;
+    holdStart = performance.now();
+    sealStage.classList.add('holding');
+    sealCaption.textContent = 'keep holding...';
+    dripTimer = setInterval(spawnDrip, 260);
+    holdRAF = requestAnimationFrame(tickHold);
+  }
+
+  function cancelHold(){
+    if(sealDone) return;
+    holdStart = null;
+    cancelAnimationFrame(holdRAF);
+    clearInterval(dripTimer);
+    sealStage.classList.remove('holding');
+    sealCaption.textContent = 'press and hold to melt the seal';
+    updateRing(0);
+  }
+
+  function completeMelt(){
+    sealDone = true;
+    clearInterval(dripTimer);
+    sealStage.classList.remove('holding');
+    sealCaption.textContent = 'melting...';
+    sealWrap.classList.add('melting');
+    for(let i=0;i<6;i++) setTimeout(spawnDrip, i*70);
+    spawnPetals(3);
+    setTimeout(()=>{
+      sealWrap.style.display = 'none';
+      letterReveal.style.display = 'block';
+      buildFinaleFlowers();
+      revealLetter();
+    }, 750);
+  }
+
+  sealStage.addEventListener('pointerdown', (e)=>{
+    e.preventDefault();
+    startHold();
   });
+  sealStage.addEventListener('pointerup', cancelHold);
+  sealStage.addEventListener('pointerleave', cancelHold);
+  sealStage.addEventListener('pointercancel', cancelHold);
+
+  function revealLetter(){
+    let delay = 300;
+    letterContent.forEach((item)=>{
+      setTimeout(()=>{
+        let el;
+        if(item.type === 'divider'){
+          el = document.createElement('div');
+          el.className = 'letter-divider';
+        } else {
+          el = document.createElement('p');
+          el.textContent = item.text;
+          el.className = 'letter-line' + (item.type === 'whisper' ? ' whisper' : '') + (item.type === 'signoff' ? ' signoff' : '');
+        }
+        letterLinesEl.appendChild(el);
+        void el.offsetWidth;
+        el.classList.add('show');
+      }, delay);
+      delay += (item.type === 'whisper' ? 2200 : item.type === 'divider' ? 900 : 1600);
+    });
+  }
 </script>
 
 </body>
