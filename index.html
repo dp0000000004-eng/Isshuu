@@ -744,17 +744,93 @@
   });
 
   const flowerSVG = `
-    <svg class="flower" viewBox="0 0 60 60">
-      <line class="stem" x1="30" y1="60" x2="30" y2="34" stroke-width="3" stroke-linecap="round"/>
-      <g class="petal-group">
-        <ellipse class="petal" cx="30" cy="14" rx="7" ry="12"/>
-        <ellipse class="petal" cx="30" cy="14" rx="7" ry="12" transform="rotate(72 30 24)"/>
-        <ellipse class="petal" cx="30" cy="14" rx="7" ry="12" transform="rotate(144 30 24)"/>
-        <ellipse class="petal" cx="30" cy="14" rx="7" ry="12" transform="rotate(216 30 24)"/>
-        <ellipse class="petal" cx="30" cy="14" rx="7" ry="12" transform="rotate(288 30 24)"/>
-      </g>
-      <circle class="center" cx="30" cy="24" r="6"/>
-    </svg>`;
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 260">
+  <defs>
+    <linearGradient id="petalFill" x1="0" y1="1" x2="0" y2="0">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="55%" stop-color="#fdf6f8"/>
+      <stop offset="100%" stop-color="#f3c9dc"/>
+    </linearGradient>
+    <linearGradient id="petalEdge" x1="0" y1="1" x2="0" y2="0">
+      <stop offset="0%" stop-color="#e7a9c4" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#b5487e" stop-opacity="0.9"/>
+    </linearGradient>
+    <linearGradient id="tubeFill" x1="0" y1="1" x2="0" y2="0">
+      <stop offset="0%" stop-color="#d9b23f"/>
+      <stop offset="45%" stop-color="#c66a63"/>
+      <stop offset="100%" stop-color="#a84a6e"/>
+    </linearGradient>
+  </defs>
+
+  <!-- base tube -->
+  <path d="M100,246 C97,224 96,198 98,176 C99,166 101,158 104,150
+           C101,158 100,166 100,176 C99,198 100,224 103,246
+           C102,250 98,250 100,246 Z"
+        fill="url(#tubeFill)"/>
+
+  <!-- petals, fanned around pivot (100,150) -->
+  <g>
+    <!-- far left, shortest -->
+    <g transform="rotate(-52 100 150)">
+      <path d="M100,150 C88,132 84,104 92,78 C95,68 98,62 100,58
+               C102,62 104,70 106,80 C110,106 106,132 100,150 Z"
+            fill="url(#petalFill)"/>
+      <path d="M100,150 C88,132 84,104 92,78 C95,68 98,62 100,58
+               C102,62 104,70 106,80 C110,106 106,132 100,150 Z"
+            fill="none" stroke="url(#petalEdge)" stroke-width="2"/>
+      <path d="M100,148 C99,120 99,92 100,64" fill="none" stroke="#c16f96" stroke-width="0.8" opacity="0.45"/>
+    </g>
+
+    <!-- left, long -->
+    <g transform="rotate(-26 100 150)">
+      <path d="M100,150 C82,128 76,90 88,48 C92,34 96,26 100,20
+               C104,26 108,36 111,50 C118,92 112,128 100,150 Z"
+            fill="url(#petalFill)"/>
+      <path d="M100,150 C82,128 76,90 88,48 C92,34 96,26 100,20
+               C104,26 108,36 111,50 C118,92 112,128 100,150 Z"
+            fill="none" stroke="url(#petalEdge)" stroke-width="2.2"/>
+      <path d="M100,148 C99,110 99,68 100,26" fill="none" stroke="#c16f96" stroke-width="0.9" opacity="0.5"/>
+    </g>
+
+    <!-- center, longest -->
+    <g transform="rotate(0 100 150)">
+      <path d="M100,150 C80,126 74,84 87,38 C91,22 96,12 100,4
+               C104,12 109,24 113,40 C121,86 114,126 100,150 Z"
+            fill="url(#petalFill)"/>
+      <path d="M100,150 C80,126 74,84 87,38 C91,22 96,12 100,4
+               C104,12 109,24 113,40 C121,86 114,126 100,150 Z"
+            fill="none" stroke="url(#petalEdge)" stroke-width="2.4"/>
+      <path d="M100,148 C99,104 99,56 100,10" fill="none" stroke="#c16f96" stroke-width="1" opacity="0.5"/>
+    </g>
+
+    <!-- right, long -->
+    <g transform="rotate(26 100 150)">
+      <path d="M100,150 C82,128 76,90 88,48 C92,34 96,26 100,20
+               C104,26 108,36 111,50 C118,92 112,128 100,150 Z"
+            fill="url(#petalFill)"/>
+      <path d="M100,150 C82,128 76,90 88,48 C92,34 96,26 100,20
+               C104,26 108,36 111,50 C118,92 112,128 100,150 Z"
+            fill="none" stroke="url(#petalEdge)" stroke-width="2.2"/>
+      <path d="M100,148 C99,110 99,68 100,26" fill="none" stroke="#c16f96" stroke-width="0.9" opacity="0.5"/>
+    </g>
+
+    <!-- far right, shortest -->
+    <g transform="rotate(52 100 150)">
+      <path d="M100,150 C88,132 84,104 92,78 C95,68 98,62 100,58
+               C102,62 104,70 106,80 C110,106 106,132 100,150 Z"
+            fill="url(#petalFill)"/>
+      <path d="M100,150 C88,132 84,104 92,78 C95,68 98,62 100,58
+               C102,62 104,70 106,80 C110,106 106,132 100,150 Z"
+            fill="none" stroke="url(#petalEdge)" stroke-width="2"/>
+      <path d="M100,148 C99,120 99,92 100,64" fill="none" stroke="#c16f96" stroke-width="0.8" opacity="0.45"/>
+    </g>
+  </g>
+
+  <!-- tiny freckles like the reference -->
+  <circle cx="86" cy="70" r="1" fill="#b5487e" opacity="0.5"/>
+  <circle cx="108" cy="95" r="1" fill="#b5487e" opacity="0.4"/>
+  <circle cx="94" cy="115" r="0.8" fill="#b5487e" opacity="0.4"/>
+</svg>`;
 
   function buildFinaleFlowers(){
     const el = document.getElementById('finaleFlowers');
