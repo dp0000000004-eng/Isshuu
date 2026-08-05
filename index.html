@@ -532,6 +532,83 @@
     font-size:0.9rem;
     color:rgba(248,239,227,0.5);
   }
+
+  .memory-card{
+    display:flex;
+    flex-wrap:wrap;
+    gap:1.5rem;
+    align-items:flex-start;
+    margin:40px 0;
+    background:#f8efe3;
+    border-radius:15px;
+    padding:24px;
+    box-shadow:0 8px 20px rgba(0,0,0,.12);
+    transition:transform 0.25s ease, box-shadow 0.25s ease;
+  }
+  .memory-card:hover{
+    transform:translateY(-4px);
+    box-shadow:0 12px 26px rgba(0,0,0,.16);
+  }
+  .memory-card img{
+    width:260px;
+    max-width:100%;
+    height:320px;
+    object-fit:cover;
+    border-radius:12px;
+    box-shadow:0 6px 15px rgba(0,0,0,.2);
+  }
+  .memory-content{
+    flex:1;
+    min-width:220px;
+  }
+  .memory-content h2{
+    color:#5b3c22;
+    font-size:32px;
+    margin-bottom:20px;
+    line-height:1.1;
+  }
+  .memory-content p{
+    font-size:20px;
+    line-height:1.8;
+    color:#4a4035;
+  }
+  @media (max-width:720px){
+    .memory-card{
+      flex-direction:column;
+      align-items:center;
+      padding:20px;
+    }
+    .memory-card img{
+      width:100%;
+      height:auto;
+    }
+    .memory-content h2{
+      font-size:28px;
+      text-align:center;
+    }
+    .memory-content p{
+      font-size:18px;
+      text-align:center;
+    }
+  }
+
+@media(max-width:768px){
+
+.memory-card{
+
+    flex-direction:column;
+
+}
+
+.memory-card img{
+
+    width:100%;
+
+    height:auto;
+
+}
+
+}
 </style>
 </head>
 <body>
@@ -595,6 +672,50 @@
   </div>
 </section>
 
+<section>
+  <div class="memory-card">
+
+    <img src="sky.jpg" alt="Memory">
+
+    <div class="memory-content">
+
+        <h2>A Quiet Beginning</h2>
+
+        <p>
+            Some moments don't announce themselves as special.
+            They simply happen...
+            and one day you realize they became memories
+            you never wanted to lose.
+        </p><br>
+
+        <p>
+          btw this place is for if you want keep track of what books you are been read ...
+          some feature on the way...
+        </p>
+
+    </div>
+
+</div>
+
+<div class="memory-card">
+
+    <img src="time.jpg" alt="Memory">
+
+    <div class="memory-content">
+
+        <h2>I sleep all sleep</h2>
+
+        <p>
+          kuch ho hi nahi raha mai kya karu to sogay...<br>
+          Hahaha.......
+        </p><br>
+
+      
+
+    </div>
+
+</div>
+</section>
 <!-- FINALE
 <section id="finale">
   <div class="finale-card">
@@ -666,8 +787,7 @@
     const hour = getISTHour();
     let period, sub;
     if(hour >= 5 && hour < 12){
-      period = 'Morning'; sub = "Sorry,  May I sleep ";
-    } else if(hour >= 12 && hour < 17){
+      period = 'Morning'; sub = "Garma garam chai bilkul ready hi ni hota.. "
       period = 'Afternoon'; sub = "Hope your day's treating you well so far.";
     } else if(hour >= 17 && hour < 21){
       period = 'Evening'; sub = "Hope today wasn't too much to handle.";
@@ -682,10 +802,10 @@
 
   // EDIT THESE — a few real moments, short and specific
   const moments = [
-    { tag: "that one dialog", text: "marungi thapad..😭" },
-    { tag: "random silence", text: "We talked about nothing for hours and it didn't feel like nothing." },
-    { tag: "still thinking about it", text: "How You Can Soo Perfect" },
-    { tag: "honestly", text: "You Are the Best" }
+    { tag: "that one dialog", text: "" },
+    { tag: "random silence", text: "some people sucks feelings " },
+    { tag: "still thinking about it", text: "I am small🥲" },
+    { tag: "honestly", text: "i am sleeping, " }
   ];
 
   const timelineEl = document.getElementById('timeline');
