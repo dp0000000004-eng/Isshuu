@@ -452,6 +452,185 @@
     color:rgba(248,239,227,0.9);
   }
 
+  .reading-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:1.4rem;
+    margin-top:2rem;
+  }
+
+  .reading-card{
+    background:rgba(248,239,227,0.08);
+    border:1px solid rgba(242,169,196,0.18);
+    border-radius:22px;
+    padding:1.8rem 1.5rem;
+    box-shadow:0 16px 40px rgba(0,0,0,0.08);
+    transition:transform 0.25s ease, border-color 0.25s ease, background 0.25s ease;
+    cursor:pointer;
+  }
+
+  .reading-card:hover{
+    transform:translateY(-4px);
+    border-color:rgba(242,169,196,0.35);
+    background:rgba(248,239,227,0.14);
+  }
+
+  .reading-card .item-type{
+    display:inline-block;
+    margin-bottom:0.8rem;
+    font-size:0.75rem;
+    text-transform:uppercase;
+    letter-spacing:0.18em;
+    color:var(--gold);
+    opacity:0.9;
+  }
+
+  .reading-card h3{
+    margin:0.4rem 0 1rem;
+    font-family:'Cormorant Garamond', serif;
+    font-size:1.25rem;
+    color:var(--cream);
+    line-height:1.3;
+  }
+
+  .reading-card p{
+    margin:0;
+    color:rgba(248,239,227,0.78);
+    line-height:1.8;
+    font-size:0.98rem;
+  }
+
+  .robot-card{
+    background:rgba(248,239,227,0.08);
+    border:1px solid rgba(242,169,196,0.2);
+    border-radius:24px;
+    padding:1.8rem;
+    box-shadow:0 18px 32px rgba(0,0,0,0.08);
+    position:relative;
+    overflow:hidden;
+    min-height:320px;
+  }
+
+  .robot-card::before{
+    content:'';
+    position:absolute;
+    inset:0;
+    background:radial-gradient(circle at top left, rgba(242,169,196,0.12), transparent 34%);
+    pointer-events:none;
+  }
+
+  .robot-title{
+    font-family:'Cormorant Garamond', serif;
+    color:var(--cream);
+    margin-bottom:0.9rem;
+    font-size:1.45rem;
+  }
+
+  .robot-text{
+    color:rgba(248,239,227,0.8);
+    line-height:1.8;
+    margin-bottom:1.4rem;
+  }
+
+  .robot-track{
+    position:relative;
+    width:100%;
+    max-width:320px;
+    margin:0 auto;
+    display:grid;
+    gap:0.85rem;
+    padding:0.6rem 0;
+  }
+
+  .robot-step{
+    position:relative;
+    min-height:56px;
+    border-radius:18px;
+    background:rgba(255,255,255,0.08);
+    border:1px solid rgba(242,169,196,0.18);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:0.95rem;
+    color:var(--cream);
+    font-weight:600;
+  }
+
+  .robot-step.active{
+    background:rgba(242,169,196,0.2);
+    border-color:rgba(242,169,196,0.35);
+  }
+
+  .robot-icon{
+    position:absolute;
+    left:50%;
+    width:44px;
+    height:44px;
+    transform:translateX(-50%);
+    border-radius:16px;
+    background:linear-gradient(180deg, #f8efe3, #f2a9c4);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:1.3rem;
+    color:#2b1f33;
+    box-shadow:0 12px 24px rgba(0,0,0,0.14);
+    transition:top 0.25s ease;
+    z-index:2;
+  }
+
+  .text-blocks{
+    display:grid;
+    gap:0.9rem;
+    margin-top:1.4rem;
+  }
+
+  .text-block{
+    padding:1rem 1.1rem;
+    border-radius:18px;
+    background:rgba(248,239,227,0.12);
+    border:1px solid rgba(242,169,196,0.2);
+    color:var(--cream);
+    cursor:pointer;
+    transition:transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+    text-align:center;
+    font-weight:600;
+  }
+
+  .text-block:hover{
+    transform:translateY(-2px);
+    background:rgba(242,169,196,0.18);
+  }
+
+  .text-block.wrong{
+    animation:shake 0.28s ease;
+    border-color:#e78;
+  }
+
+  .robot-message{
+    margin-top:1rem;
+    color:rgba(248,239,227,0.92);
+    min-height:2.4rem;
+    line-height:1.7;
+  }
+
+  .robot-story{
+    display:none;
+    margin-top:1rem;
+    color:rgba(248,239,227,0.9);
+    line-height:1.8;
+    background:rgba(255,255,255,0.06);
+    padding:1rem 1rem;
+    border-radius:18px;
+    border:1px solid rgba(242,169,196,0.14);
+  }
+
+  @keyframes shake{
+    0%,100%{transform:translateX(0);}
+    25%{transform:translateX(-6px);}
+    75%{transform:translateX(6px);}
+  }
+
   /* Random-line hero card */
   .rl-wrap{ max-width:520px; width:100%; text-align:center; }
 
@@ -503,6 +682,98 @@
     text-transform:uppercase;
     color:rgba(248,239,227,0.4);
   }
+  :root {
+    --dusk: #221a2b;
+    --dusk-2: #2f2338;
+    --blush: #f2a9c4;
+    --blush-soft: #f6c9dc;
+    --gold: #e8c468;
+    --sage: #8fae8b;
+    --cream: #f8efe3;
+    --stem: #5c7a58;
+}
+
+.codeHold {
+  padding:90px;
+}
+
+.code-box {
+    background: var(--dusk);
+    border: 1px solid var(--dusk-2);
+    border-radius: 14px;
+    overflow: hidden;
+    margin: 20px 0;
+    box-shadow: 0 8px 25px rgba(34, 26, 43, 0.25);
+}
+
+/* Header */
+.code-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 16px;
+    background: var(--dusk-2);
+    border-bottom: 1px solid rgba(242, 169, 196, 0.15);
+}
+
+.file-info {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    color: var(--cream);
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.file-dot {
+    width: 9px;
+    height: 9px;
+    background: var(--blush);
+    border-radius: 50%;
+    box-shadow: 0 0 8px var(--blush);
+}
+
+/* Copy button */
+.copy-btn {
+    border: none;
+    border-radius: 7px;
+    padding: 6px 12px;
+    background: var(--gold);
+    color: var(--dusk);
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.copy-btn:hover {
+    background: var(--blush);
+    transform: translateY(-1px);
+}
+
+/* Code area */
+.code-box pre {
+    margin: 0;
+    padding: 20px;
+    overflow-x: auto;
+    color: var(--cream);
+    font-family: "Courier New", monospace;
+    font-size: 14px;
+    line-height: 1.7;
+}
+
+/* Syntax colors */
+.code-box .keyword {
+    color: var(--blush);
+}
+
+.code-box .function {
+    color: var(--gold);
+}
+
+.code-box .string {
+    color: var(--sage);
+}
 
   @media (max-width:480px){
     .rl-card{ padding:2.4rem 1.5rem; }
@@ -674,31 +945,39 @@
 
 <section>
   <div class="memory-card">
-
     <img src="sky.jpg" alt="Memory">
-
     <div class="memory-content">
-
-        <h2>A Quiet Beginning</h2>
-
+        <h2>Chapter One: Pages</h2>
         <p>
-            Some moments don't announce themselves as special.
-            They simply happen...
-            and one day you realize they became memories
-            you never wanted to lose.
+            I thought of you in the quiet hours when I read by candlelight.
+            Every line felt like a gentle scene written for us.
         </p><br>
-
         <p>
-          btw this place is for if you want keep track of what books you are been read ...
-          some feature on the way...
+          This place is for your book and drama heart — a small shelf of moments and scenes.
         </p>
-
     </div>
+  </div>
 
-</div>
-
-
+  <!-- <div class="memory-card">
+    <img src="time.jpg" alt="Memory">
+    <div class="memory-content">
+        <h2>Scene Two: Late Night</h2>
+        <p>
+          The best dramas are the ones that keep you thinking after the screen goes dark.
+          This is a little reminder of that feeling.
+        </p><br>
+        <p>
+          These cards are the stories I want you to carry with you.
+        </p>
+    </div>
+  </div> -->
 </section>
+<div class="codeHold">
+  <div class="code-box"> 
+    <div class="code-header">   
+      <div class="file-info"> <span class="file-dot"></span> <span>heart.py</span> 
+        </div> <button class="copy-btn" onclick="copyCode(this)"> Copy </button> </div> <pre><code><span class="keyword"># Run This in Python file to see what's happening <br>import</span> <span class="module">turtle</span><br><span class="variable">screen</span> = turtle.<span class="function">Screen</span>()<br><span class="variable">screen</span>.<span class="function">bgcolor</span>(<span class="string">"black"</span>)<br><span class="variable">screen</span>.<span class="function">title</span>(<span class="string">"not today"</span>)<br><span class="variable">pen</span> = turtle.<span class="function">Turtle</span>()<br><span class="variable">pen</span>.<span class="function">color</span>(<span class="string">"red"</span>)<br><span class="variable">pen</span>.<span class="function">fillcolor</span>(<span class="string">"red"</span>)<br><span class="variable">pen</span>.<span class="function">pensize</span>(<span class="number">3</span>)<br><span class="variable">pen</span>.<span class="function">speed</span>(<span class="number">2</span>)<br><span class="variable">pen</span>.<span class="function">begin_fill</span>()<br><span class="variable">pen</span>.<span class="function">left</span>(<span class="number">140</span>)<br><span class="variable">pen</span>.<span class="function">forward</span>(<span class="number">180</span>)<br><span class="variable">pen</span>.<span class="function">circle</span>(<span class="number">-90</span>, <span class="number">200</span>)<br><span class="variable">pen</span>.<span class="function">left</span>(<span class="number">120</span>)<br><span class="variable">pen</span>.<span class="function">circle</span>(<span class="number">-90</span>, <span class="number">200</span>)<br><span class="variable">pen</span>.<span class="function">forward</span>(<span class="number">180</span>)<br><span class="variable">pen</span>.<span class="function">end_fill</span>()<br><span class="variable">pen</span>.<span class="function">hideturtle</span>()<br>turtle.<span class="function">done</span>()</code></pre> </div>
+</div>
 <!-- FINALE
 <section id="finale">
   <div class="finale-card">
@@ -801,16 +1080,16 @@
 
   // EDIT THIS — pool of lines for Isshuu, one shows at random per tap
   const randomLines = [
-    "Good morning, Isshuu. Hope your coffee's warm and your day is kind to you.",
-    "Wake up, Isshuu — the world's just a little better with you awake in it.",
-    "Morning already? Go be brilliant today, Isshuu.",
-    "Goodnight, Isshuu. Rest well — you've earned it.",
-    "Sleep tight, Isshuu. Tomorrow's lucky to have you again.",
-    "Close your eyes, Isshuu. I'll see you in the morning.",
-    "You cross my mind more than you'd probably guess, Isshuu.",
-    "No reason. Just thought you should know you matter, Isshuu.",
-    "Whatever today looked like, I hope some part of it was easy, Isshuu.",
-    "You're doing better than you think you are, Isshuu."
+    "This feels like the quiet scene in a drama where everything finally makes sense.",
+    "A book line that made me think of you — soft, honest, and impossible to forget.",
+    "If our story were a novel, this would be the page I keep coming back to.",
+    "There's a scene in my mind that belongs to you, even when the lights go down.",
+    "A story whispered through pages and screen time, just for you.",
+    "Reading between the lines, all I see is a gentle, familiar smile.",
+    "A favorite plot twist: you showing up in the quietest part of my day.",
+    "This card is a little chapter of feeling, written just for you.",
+    "The sweetest dramas are the ones that leave room for a new page.",
+    "If memory had a cover, it would be warm, soft, and full of your name."
   ];
 
   const rlCard = document.getElementById('rlCard');
@@ -979,21 +1258,21 @@
   }
 
   function spawnFlowers(n, originX, originY){
-    n = Math.min(n, 6);
+    n = Math.min(n, 18);
     const hasOrigin = typeof originX === 'number';
     for(let i=0;i<n;i++){
       const f = document.createElement('div');
       f.className = 'flower-fall';
       const size = 14 + Math.random()*12;
       if(hasOrigin){
-        f.style.left = (originX + (Math.random()*50-25)) + 'px';
-        f.style.top = (originY + (Math.random()*20-10)) + 'px';
+        f.style.left = (originX + (Math.random()*80-40)) + 'px';
+        f.style.top = (originY + (Math.random()*40-20)) + 'px';
       } else {
         f.style.left = Math.random()*100+'vw';
         f.style.top = '-40px';
       }
       f.style.width = f.style.height = size+'px';
-      f.style.setProperty('--drift', (Math.random()*70-35)+'px');
+      f.style.setProperty('--drift', (Math.random()*120-60)+'px');
       f.style.animationDuration = (1.6+Math.random()*1.2)+'s';
       f.innerHTML = flowerSVG;
       document.body.appendChild(f);
@@ -1007,7 +1286,7 @@
     const now = Date.now();
     if(now - lastFlowerTap < 120) return; // avoid double-fire from nested clicks
     lastFlowerTap = now;
-    spawnFlowers(4, e.clientX, e.clientY);
+    spawnFlowers(18, e.clientX, e.clientY);
   });
 
   // EDIT THIS — the letter, revealed line by line
@@ -1175,6 +1454,20 @@
         card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
       });
     });
+  }
+  function copyCode(button) {
+      const code = button
+          .closest(".code-box")
+          .querySelector("code")
+          .innerText;
+
+      navigator.clipboard.writeText(code);
+
+      button.innerText = "Copied ✓";
+
+      setTimeout(() => {
+          button.innerText = "Copy";
+      }, 1500);
   }
 </script>
 
